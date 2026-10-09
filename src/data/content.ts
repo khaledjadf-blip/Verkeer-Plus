@@ -3,9 +3,9 @@ import type { Service, TrustItem, ContactInfo, NavLink, FitItem } from '@/types'
 export const siteConfig = {
   name: 'Verkeersplus',
   legalName: 'Verkeersplus Services B.V.',
-  phone: '+31 6 8725 8236',
-  phoneTel: '+31687258236',
-  phoneWhatsapp: '31687258236',
+  phone: '+31 6 4511 2339',
+  phoneTel: '+31645112339',
+  phoneWhatsapp: '31645112339',
   email: 'info@verkeersplus.nl',
   group: 'Pijler Groep',
   baseUrl: 'https://verkeersplus.nl',
@@ -94,8 +94,8 @@ export const trustItems: TrustItem[] = [
 ]
 
 export const contactInfo: ContactInfo[] = [
-  { key: 'phone', nl: { label: 'Telefoon', value: '+31 6 8725 8236' }, ar: { label: 'الهاتف', value: '+31 6 8725 8236' }, href: 'tel:+31687258236' },
-  { key: 'whatsapp', nl: { label: 'WhatsApp', value: '+31 6 8725 8236' }, ar: { label: 'واتساب', value: '+31 6 8725 8236' }, href: 'https://wa.me/31687258236' },
+  { key: 'phone', nl: { label: 'Telefoon', value: '+31 6 4511 2339' }, ar: { label: 'الهاتف', value: '+31 6 4511 2339' }, href: 'tel:+31645112339' },
+  { key: 'whatsapp', nl: { label: 'WhatsApp', value: '+31 6 4511 2339' }, ar: { label: 'واتساب', value: '+31 6 4511 2339' }, href: 'https://wa.me/31645112339' },
   { key: 'email', nl: { label: 'E-mail', value: 'info@verkeersplus.nl' }, ar: { label: 'البريد الإلكتروني', value: 'info@verkeersplus.nl' }, href: 'mailto:info@verkeersplus.nl' },
 ]
 
