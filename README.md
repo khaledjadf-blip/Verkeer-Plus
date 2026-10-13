@@ -110,3 +110,16 @@ npm start
 
 Set `NEXT_PUBLIC_SITE_URL` env var to your domain and update `siteConfig.baseUrl` in `src/data/content.ts`.
 ```
+
+## Course booking & payments
+
+`/opleiding` lists upcoming dates for the Beroepsverkeersregelaar course. Customers book at
+`/boeken/[id]` and pay via Mollie; `/admin` manages dates, bookings, cancellations and refunds.
+Forms and booking e-mails go through Resend.
+
+Setup (once):
+1. Supabase → SQL Editor → run `supabase/schema.sql` (safe to re-run; tables are prefixed `vp_`).
+2. Resend → add and verify the domain `verkeersplus.nl`.
+3. Vercel → Environment Variables: see `.env.example`
+   (`RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`, `SUPABASE_URL`,
+   `SUPABASE_SERVICE_ROLE_KEY`, `MOLLIE_API_KEY`, `ADMIN_PASSWORD`, and `SITE_URL` for Production).

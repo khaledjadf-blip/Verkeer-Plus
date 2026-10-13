@@ -49,7 +49,13 @@ export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
                     <p>
                       عند تعبئة نموذج التواصل أو نموذج التقديم للعمل، نستلم البيانات التي تدخلها بنفسك: الاسم،
                       رقم الهاتف، البريد الإلكتروني، مدينة الإقامة، وعند التقديم للعمل — السيرة الذاتية إن وُجدت.
+                      عند حجز دورة نحفظ أيضاً تاريخ ومكان ميلادك وحالة الدفع، لأنها ضرورية للتسجيل والشهادة.
                       نحن لا نجمع بيانات عبر ملفات تعريف ارتباط تتبعية أو شبكات إعلانية.
+                    </p>
+                    <p className="mt-3">
+                      نستعين لذلك ببعض مقدّمي الخدمات: Mollie (الدفع)، Supabase (حفظ الحجوزات)، Resend (إرسال
+                      البريد الإلكتروني) وVercel (الاستضافة). عند حجز دورة نشارك بياناتك مع شريكنا التعليمي. ولا
+                      يستخدمون بياناتك إلا لهذا الغرض.
                     </p>
                   </div>
 
@@ -101,8 +107,14 @@ export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
                     <p>
                       Wanneer je het contactformulier of het sollicitatieformulier invult, ontvangen wij de gegevens
                       die je zelf invoert: onder andere naam, telefoonnummer, e-mailadres, woonplaats en — bij een
-                      sollicitatie — eventueel een cv. Wij verzamelen geen gegevens via trackingcookies of
-                      advertentienetwerken.
+                      sollicitatie — eventueel een cv. Boek je een opleiding, dan bewaren we ook je geboortedatum,
+                      geboorteplaats en betaalstatus; die zijn nodig voor de inschrijving en het certificaat. Wij
+                      verzamelen geen gegevens via trackingcookies of advertentienetwerken.
+                    </p>
+                    <p className="mt-3">
+                      Hiervoor gebruiken we een paar dienstverleners: Mollie (betalingen), Supabase (opslag van
+                      boekingen), Resend (verzenden van e-mail) en Vercel (hosting). Voor een opleiding delen we je
+                      gegevens met onze opleidingspartner. Zij gebruiken je gegevens alleen voor dit doel.
                     </p>
                   </div>
 

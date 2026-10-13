@@ -17,6 +17,9 @@ export default function Footer() {
           <Link href={localizedHref('/', lang)} className="font-mono text-[11px] text-dim hover:text-accent transition-colors">
             {lang === 'nl' ? 'Home' : 'الرئيسية'}
           </Link>
+          <Link href={localizedHref('/opleiding', lang)} className="font-mono text-[11px] text-dim hover:text-accent transition-colors">
+            {lang === 'nl' ? 'Opleiding' : 'الدورة'}
+          </Link>
           <Link href={localizedHref('/werken-bij', lang)} className="font-mono text-[11px] text-dim hover:text-accent transition-colors">
             {lang === 'nl' ? 'Werken bij' : 'العمل معنا'}
           </Link>

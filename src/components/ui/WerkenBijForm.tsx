@@ -1,11 +1,16 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, FormEvent } from 'react'
+import { localizedHref } from '@/lib/localizedHref'
 import { useT } from '@/lib/langContext'
 import { Field, Input, Textarea, Select, RadioPillGroup, FileUpload, FormMessage } from './FormField'
 import { fitItems } from '@/data/content'
 import { useLang } from '@/lib/langContext'
-import { submitToWeb3Forms } from '@/lib/submitForm'
+import { HONEYPOT_NAME, submitForm } from '@/lib/submitForm'
+
+// Must match MAX_CV_BYTES in app/api/apply/route.ts.
+const MAX_CV_BYTES = 4 * 1024 * 1024
 
 export default function WerkenBijForm() {
   const t = useT()
@@ -38,16 +43,18 @@ export default function WerkenBijForm() {
       return
     }
     const attachment = data.get('attachment')
-    if (attachment instanceof File && attachment.size > 5 * 1024 * 1024) {
+    if (attachment instanceof File && attachment.size > MAX_CV_BYTES) {
       setFileError(t.wbFileTooLarge)
       return
     }
 
     setSubmitting(true)
-    const result = await submitToWeb3Forms(new FormData(form), {
-      subject: `Nieuwe sollicitatie verkeersregelaar — ${naam}`,
-    })
+    const result = await submitForm('/api/apply', new FormData(form))
     setSubmitting(false)
+    if (!result.ok && result.reason === 'file') {
+      setFileError(t.wbFileTooLarge)
+      return
+    }
     if (result.ok) {
       setMessage({ type: 'success', text: t.wbSuccess })
       form.reset()
@@ -58,7 +65,7 @@ export default function WerkenBijForm() {
   }
 
   function handleFile(file: File | null) {
-    if (file && file.size > 5 * 1024 * 1024) {
+    if (file && file.size > MAX_CV_BYTES) {
       setFileError(t.wbFileTooLarge)
       return
     }
@@ -80,7 +87,10 @@ export default function WerkenBijForm() {
           ))}
         </ul>
         <p className="mt-5 pt-4 border-t border-concrete text-[13px] text-dim leading-relaxed">
-          {t.wbSidebarNote}
+          {t.wbSidebarNote}{' '}
+          <Link href={localizedHref('/opleiding', lang)} className="font-semibold text-accent-soft underline underline-offset-4">
+            {lang === 'nl' ? 'Bekijk de opleidingsdata →' : 'عرض مواعيد الدورة ←'}
+          </Link>
         </p>
       </aside>
 
@@ -198,6 +208,10 @@ export default function WerkenBijForm() {
             <Field label={t.formBericht}>
               <Textarea name="bericht" placeholder={t.formBerichtPh} rows={4} />
             </Field>
+          </div>
+
+          <div aria-hidden className="absolute h-0 w-0 overflow-hidden opacity-0 pointer-events-none">
+            <label>Website<input name={HONEYPOT_NAME} tabIndex={-1} autoComplete="off" /></label>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
