@@ -92,6 +92,8 @@ const localBusinessSchema = {
   url: siteConfig.baseUrl,
   email: siteConfig.email,
   telephone: siteConfig.phone,
+  vatID: siteConfig.btw,
+  identifier: { '@type': 'PropertyValue', propertyID: 'KvK', value: siteConfig.kvk },
   areaServed: {
     '@type': 'Country',
     name: 'Nederland',

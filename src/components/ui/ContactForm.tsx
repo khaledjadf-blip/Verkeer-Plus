@@ -56,8 +56,8 @@ export default function ContactForm() {
               const valueEl = (
                 <span className="text-[15px] text-accent-soft">
                   {row.href
-                    ? <a href={row.href} className="hover:underline">{r.value}</a>
-                    : r.value
+                    ? <a href={row.href} className="hover:underline"><bdi dir="ltr">{r.value}</bdi></a>
+                    : <bdi dir="ltr">{r.value}</bdi>
                   }
                 </span>
               )
@@ -85,6 +85,7 @@ export default function ContactForm() {
           <a
             href={`tel:${siteConfig.phoneTel}`}
             className="font-mono text-[18px] font-bold text-accent-soft hover:underline whitespace-nowrap"
+            dir="ltr"
           >
             {siteConfig.phone}
           </a>

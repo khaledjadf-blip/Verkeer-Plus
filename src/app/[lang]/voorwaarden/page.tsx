@@ -42,6 +42,7 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
                   <p>
                     تسري هذه الشروط على المهام التي يتم الاتفاق عليها مع {siteConfig.legalName}
                     (&quot;فيركيرسبلوس&quot;)، ومقرها هولندا، وعلى حجز الدورات عبر هذا الموقع.
+                    رقم السجل التجاري (KvK): <bdi>{siteConfig.kvk}</bdi>، الرقم الضريبي (BTW): <bdi>{siteConfig.btw}</bdi>.
                   </p>
 
                   <div>
@@ -136,6 +137,7 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
                   <p>
                     Deze voorwaarden gelden voor opdrachten die worden afgesloten met {siteConfig.legalName}
                     (&quot;Verkeersplus&quot;), gevestigd in Nederland, en voor het boeken van een opleiding via deze website.
+                    KvK-nummer {siteConfig.kvk}, btw-nummer {siteConfig.btw}.
                   </p>
 
                   <div>

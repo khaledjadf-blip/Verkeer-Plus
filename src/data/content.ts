@@ -7,6 +7,8 @@ export const siteConfig = {
   phoneTel: '+31645112339',
   phoneWhatsapp: '31645112339',
   email: 'info@verkeersplus.nl',
+  kvk: '42116807',
+  btw: 'NL869805435B01',
   group: 'Pijler Groep',
   baseUrl: 'https://verkeersplus.nl',
 }
@@ -98,6 +100,8 @@ export const contactInfo: ContactInfo[] = [
   { key: 'phone', nl: { label: 'Telefoon', value: '+31 6 4511 2339' }, ar: { label: 'الهاتف', value: '+31 6 4511 2339' }, href: 'tel:+31645112339' },
   { key: 'whatsapp', nl: { label: 'WhatsApp', value: '+31 6 4511 2339' }, ar: { label: 'واتساب', value: '+31 6 4511 2339' }, href: 'https://wa.me/31645112339' },
   { key: 'email', nl: { label: 'E-mail', value: 'info@verkeersplus.nl' }, ar: { label: 'البريد الإلكتروني', value: 'info@verkeersplus.nl' }, href: 'mailto:info@verkeersplus.nl' },
+  { key: 'kvk', nl: { label: 'KvK', value: '42116807' }, ar: { label: 'رقم السجل التجاري (KvK)', value: '42116807' } },
+  { key: 'btw', nl: { label: 'Btw-nummer', value: 'NL869805435B01' }, ar: { label: 'الرقم الضريبي (BTW)', value: 'NL869805435B01' } },
 ]
 
 export const fitItems: FitItem[] = [
@@ -174,7 +178,6 @@ export const ui = {
     ctSubmitError: 'Verzenden is niet gelukt. Bel of mail ons direct — zie de contactgegevens hiernaast.',
     ctNote: 'Wij reageren binnen 2 uur. Spoed? Bel direct.',
     // Footer
-    footerCopy: 'Verkeersplus Services B.V.',
     privacy: 'Privacy',
     terms: 'Voorwaarden',
     backHome: '← Terug naar home',
@@ -259,7 +262,6 @@ export const ui = {
     ctError: 'يرجى ملء جميع الحقول المطلوبة.',
     ctSubmitError: 'تعذر الإرسال. يرجى الاتصال أو المراسلة مباشرة — انظر بيانات التواصل بجانبك.',
     ctNote: 'نرد خلال ساعتين. طارئ؟ اتصل مباشرة.',
-    footerCopy: 'فيركيرسبلوس سيرفيسز',
     privacy: 'الخصوصية',
     terms: 'الشروط',
     backHome: 'العودة للرئيسية →',

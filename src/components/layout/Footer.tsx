@@ -12,7 +12,12 @@ export default function Footer() {
   return (
     <footer className="border-t border-concrete">
       <div className="max-w-[1120px] mx-auto px-6 md:px-12 py-7 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="font-mono text-[11px] text-dim">© {new Date().getFullYear()} {t.footerCopy}</p>
+        <div className="text-center sm:text-start">
+          <p className="font-mono text-[11px] text-dim" dir="ltr">© {new Date().getFullYear()} {siteConfig.legalName}</p>
+          <p className="mt-1 font-mono text-[11px] text-dim" dir="ltr">
+            KvK {siteConfig.kvk} · {lang === 'nl' ? 'btw' : 'VAT'} {siteConfig.btw}
+          </p>
+        </div>
         <div className="flex items-center gap-5 flex-wrap justify-center">
           <Link href={localizedHref('/', lang)} className="font-mono text-[11px] text-dim hover:text-accent transition-colors">
             {lang === 'nl' ? 'Home' : 'الرئيسية'}

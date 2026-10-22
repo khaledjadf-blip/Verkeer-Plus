@@ -32,12 +32,12 @@ export default function ContactSnippet() {
           </div>
 
           <ul className="border border-concrete bg-raised/80 p-4 sm:p-5">
-            {contactInfo.map(row => {
+            {contactInfo.filter(row => row.href).map(row => {
               const r = row[lang]
               const inner = (
                 <>
                   <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-dim">{r.label}</span>
-                  <span className="text-right text-[15px] font-semibold text-accent-soft">{r.value}</span>
+                  <span className="text-end text-[15px] font-semibold text-accent-soft"><bdi dir="ltr">{r.value}</bdi></span>
                 </>
               )
               return (

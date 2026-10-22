@@ -44,7 +44,7 @@ function customerEmailHtml(b: BookingWithSession) {
   <p>Neem op de opleidingsdag een geldig identiteitsbewijs mee (paspoort, ID-kaart of rijbewijs). Kom graag 15 minuten voor aanvang.</p>
   <p>Annuleren is kosteloos tot 7 dagen voor de startdatum: stuur dan een e-mail naar ${email}. Daarna is terugbetaling niet mogelijk. Zie onze <a href="${termsUrl}">voorwaarden</a>.</p>
   <p>Vragen? Antwoord op deze e-mail of bel/WhatsApp <a href="tel:${siteConfig.phoneTel}">${phone}</a>.</p>
-  <p>Met vriendelijke groet,<br>${escapeHtml(siteConfig.legalName)}</p>
+  <p>Met vriendelijke groet,<br>${escapeHtml(siteConfig.legalName)}<br><span style="color:#777;font-size:12px">KvK ${siteConfig.kvk} · btw ${siteConfig.btw}</span></p>
   ${divider}
   <div dir="rtl" style="text-align:right">
     <h2 style="color:#d4191b">تم تأكيد حجزك</h2>
@@ -118,7 +118,7 @@ export async function sendCancellationEmails(b: BookingWithSession, refunded: bo
     ? `<p>Wij hebben ${amount} terugbetaald. Het bedrag staat binnen enkele werkdagen weer op je rekening.</p>`
     : `<p>Volgens onze <a href="${termsUrl}">voorwaarden</a> is bij annuleren binnen 7 dagen voor de startdatum geen terugbetaling mogelijk.</p>`}
   <p>Wil je een nieuwe datum boeken? Kijk op <a href="${courseUrl}">${escapeHtml(courseUrl.replace(/^https?:\/\//, ''))}</a>. Vragen? Antwoord op deze e-mail of bel/WhatsApp <a href="tel:${siteConfig.phoneTel}">${phone}</a>.</p>
-  <p>Met vriendelijke groet,<br>${escapeHtml(siteConfig.legalName)}</p>
+  <p>Met vriendelijke groet,<br>${escapeHtml(siteConfig.legalName)}<br><span style="color:#777;font-size:12px">KvK ${siteConfig.kvk} · btw ${siteConfig.btw}</span></p>
   ${divider}
   <div dir="rtl" style="text-align:right">
     <h2 style="color:#d4191b">تم إلغاء حجزك</h2>
