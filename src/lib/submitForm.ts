@@ -1,28 +1,16 @@
-export type SubmitResult = { ok: true } | { ok: false; reason: 'missing-key' | 'api-error' | 'network-error' }
+export type SubmitResult = { ok: true } | { ok: false; reason: 'invalid' | 'file' | 'server' | 'network-error' }
 
-export async function submitToWeb3Forms(formData: FormData, extra?: Record<string, string>): Promise<SubmitResult> {
-  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY
-
-  if (!accessKey) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('NEXT_PUBLIC_WEB3FORMS_KEY is not set — form submissions will not be delivered. See .env.example.')
-    }
-    return { ok: false, reason: 'missing-key' }
-  }
-
-  formData.append('access_key', accessKey)
-  if (extra) {
-    for (const [key, value] of Object.entries(extra)) formData.append(key, value)
-  }
-
+/** Posts a form to one of our own API routes (/api/contact, /api/apply), which e-mail it via Resend. */
+export async function submitForm(endpoint: '/api/contact' | '/api/apply', formData: FormData): Promise<SubmitResult> {
   try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formData,
-    })
-    const json = await res.json()
-    return json.success ? { ok: true } : { ok: false, reason: 'api-error' }
+    const res = await fetch(endpoint, { method: 'POST', body: formData })
+    const json = await res.json().catch(() => ({}))
+    if (res.ok && json.ok) return { ok: true }
+    return { ok: false, reason: json.error === 'invalid' || json.error === 'file' ? json.error : 'server' }
   } catch {
     return { ok: false, reason: 'network-error' }
   }
 }
+
+/** Hidden spam trap: real visitors never see or fill this field. */
+export const HONEYPOT_NAME = 'website'

@@ -6,6 +6,7 @@ const base = siteConfig.baseUrl
 const pages = [
   { path: '/',             priority: 1.0,  freq: 'weekly'  },
   { path: '/contact',      priority: 0.9,  freq: 'monthly' },
+  { path: '/opleiding',    priority: 0.9,  freq: 'weekly'  },
   { path: '/werken-bij',   priority: 0.8,  freq: 'monthly' },
   { path: '/diensten/wegwerkzaamheden', priority: 0.8, freq: 'monthly' },
   { path: '/diensten/evenementen',      priority: 0.8, freq: 'monthly' },

@@ -3,10 +3,12 @@ import type { Service, TrustItem, ContactInfo, NavLink, FitItem } from '@/types'
 export const siteConfig = {
   name: 'Verkeersplus',
   legalName: 'Verkeersplus Services B.V.',
-  phone: '+31 6 8725 8236',
-  phoneTel: '+31687258236',
-  phoneWhatsapp: '31687258236',
+  phone: '+31 6 4511 2339',
+  phoneTel: '+31645112339',
+  phoneWhatsapp: '31645112339',
   email: 'info@verkeersplus.nl',
+  kvk: '42116807',
+  btw: 'NL869805435B01',
   group: 'Pijler Groep',
   baseUrl: 'https://verkeersplus.nl',
 }
@@ -14,6 +16,7 @@ export const siteConfig = {
 export const navLinks: NavLink[] = [
   { href: '/#diensten',   nl: 'Diensten',     ar: 'الخدمات' },
   { href: '/#over-ons',   nl: 'Over ons',     ar: 'من نحن' },
+  { href: '/opleiding',   nl: 'Opleiding',    ar: 'الدورة' },
   { href: '/werken-bij',  nl: 'Werken bij',   ar: 'العمل معنا' },
   { href: '/contact',     nl: 'Contact',      ar: 'تواصل معنا' },
 ]
@@ -94,9 +97,11 @@ export const trustItems: TrustItem[] = [
 ]
 
 export const contactInfo: ContactInfo[] = [
-  { key: 'phone', nl: { label: 'Telefoon', value: '+31 6 8725 8236' }, ar: { label: 'الهاتف', value: '+31 6 8725 8236' }, href: 'tel:+31687258236' },
-  { key: 'whatsapp', nl: { label: 'WhatsApp', value: '+31 6 8725 8236' }, ar: { label: 'واتساب', value: '+31 6 8725 8236' }, href: 'https://wa.me/31687258236' },
+  { key: 'phone', nl: { label: 'Telefoon', value: '+31 6 4511 2339' }, ar: { label: 'الهاتف', value: '+31 6 4511 2339' }, href: 'tel:+31645112339' },
+  { key: 'whatsapp', nl: { label: 'WhatsApp', value: '+31 6 4511 2339' }, ar: { label: 'واتساب', value: '+31 6 4511 2339' }, href: 'https://wa.me/31645112339' },
   { key: 'email', nl: { label: 'E-mail', value: 'info@verkeersplus.nl' }, ar: { label: 'البريد الإلكتروني', value: 'info@verkeersplus.nl' }, href: 'mailto:info@verkeersplus.nl' },
+  { key: 'kvk', nl: { label: 'KvK', value: '42116807' }, ar: { label: 'رقم السجل التجاري (KvK)', value: '42116807' } },
+  { key: 'btw', nl: { label: 'Btw-nummer', value: 'NL869805435B01' }, ar: { label: 'الرقم الضريبي (BTW)', value: 'NL869805435B01' } },
 ]
 
 export const fitItems: FitItem[] = [
@@ -136,7 +141,7 @@ export const ui = {
     networkBody: 'Verkeersplus Services is de naam waarmee wij sinds kort naar buiten treden — maar wij beginnen niet bij nul. Vóór de start van dit bedrijf waren wij al een paar jaar actief in de verkeersbranche, en in die tijd hebben we goede contacten en vaste partners opgebouwd: opdrachtgevers, collega-bedrijven en verkeersregelaars door het hele land. Wij maken bovendien deel uit van een grotere groep bedrijven. Daardoor kunnen wij vandaag leveren wat een nieuwe naam normaal nog niet zou kunnen: dekking door heel Nederland, binnen 24 uur.',
     networkBodyBold: 'Wij maken bovendien deel uit van een grotere groep bedrijven.',
     bannerTitle: 'Zelf verkeersregelaar worden?',
-    bannerBody: 'Via onze opleidingspartner haal je je certificering en sta je snel inzetbaar op de weg.',
+    bannerBody: 'Volg de opleiding Beroepsverkeersregelaar via onze opleidingspartner. Kies een datum, boek en betaal direct online.',
     bannerBtn: 'Solliciteer direct',
     contactEyebrow: 'Contact',
     contactTitle: 'Direct een team nodig?',
@@ -157,7 +162,7 @@ export const ui = {
     wbEmailError: 'Vul een geldig e-mailadres in.',
     wbSubmitError: 'Verzenden is niet gelukt. Bel of mail ons direct — zie de contactgegevens hierboven.',
     wbPrivacy: 'We behandelen je gegevens vertrouwelijk en nemen binnen 2 werkdagen contact op.',
-    wbFileTooLarge: 'Bestand te groot (max 5 MB)',
+    wbFileTooLarge: 'Bestand te groot of verkeerd type (PDF, DOC of DOCX, max 4 MB)',
     // Contact page
     ctInfoTitle: 'Bereikbaarheidsinfo',
     ctInfoSub: 'Bel, mail of stuur een bericht. Wij zijn er altijd.',
@@ -173,7 +178,6 @@ export const ui = {
     ctSubmitError: 'Verzenden is niet gelukt. Bel of mail ons direct — zie de contactgegevens hiernaast.',
     ctNote: 'Wij reageren binnen 2 uur. Spoed? Bel direct.',
     // Footer
-    footerCopy: 'Verkeersplus Services B.V.',
     privacy: 'Privacy',
     terms: 'Voorwaarden',
     backHome: '← Terug naar home',
@@ -190,7 +194,7 @@ export const ui = {
     formErv: 'Ervaring', formErvNone: 'Geen ervaring', formErvMin: 'Minder dan 1 jaar',
     formErv1_3: '1 – 3 jaar', formErvPlus: 'Meer dan 3 jaar',
     formTalen: 'Talen die je spreekt', formTalenPh: 'Bijv. Nederlands, Arabisch, Engels',
-    formCV: 'CV uploaden', formCVHint: 'Kies bestand of sleep het hierheen — PDF, DOC, max. 5 MB',
+    formCV: 'CV uploaden', formCVHint: 'Kies bestand of sleep het hierheen — PDF, DOC, max. 4 MB',
     formBericht: 'Wil je nog iets toevoegen?', formBerichtPh: 'Vertel kort iets over jezelf, je motivatie of wanneer je kunt starten.',
     formBedrijf: 'Bedrijf', formBedrijfPh: 'Optioneel',
     formDienst: 'Type aanvraag', formDienstDefault: 'Selecteer een dienst',
@@ -224,7 +228,7 @@ export const ui = {
     networkBody: 'فيركيرسبلوس سيرفيسز هو الاسم الذي نطلقه حديثاً — لكننا لا نبدأ من الصفر. قبل تأسيس هذه الشركة، كنا نعمل بالفعل لعدة سنوات في قطاع المرور، وخلال تلك الفترة بنينا علاقات قوية وشراكات ثابتة. نحن جزء من مجموعة شركات أكبر، مما يتيح لنا تقديم تغطية في جميع أنحاء هولندا خلال 24 ساعة.',
     networkBodyBold: 'نحن جزء من مجموعة شركات أكبر.',
     bannerTitle: 'هل تريد أن تصبح منظم حركة مرور؟',
-    bannerBody: 'من خلال شريكنا التعليمي، يمكنك الحصول على الشهادة والبدء بالعمل بسرعة.',
+    bannerBody: 'تابع دورة منظم حركة مرور محترف عبر شريكنا التعليمي. اختر موعداً، واحجز وادفع مباشرة عبر الإنترنت.',
     bannerBtn: 'قدّم طلبك الآن',
     contactEyebrow: 'تواصل معنا',
     contactTitle: 'تحتاج فريقاً فوراً؟',
@@ -244,7 +248,7 @@ export const ui = {
     wbEmailError: 'يرجى إدخال بريد إلكتروني صحيح.',
     wbSubmitError: 'تعذر الإرسال. يرجى الاتصال أو المراسلة مباشرة — انظر بيانات التواصل أعلاه.',
     wbPrivacy: 'نتعامل مع بياناتك بسرية ونتواصل معك خلال يومي عمل.',
-    wbFileTooLarge: 'الملف كبير جداً (الحد الأقصى 5 ميغابايت)',
+    wbFileTooLarge: 'الملف كبير جداً أو نوعه غير مدعوم (PDF أو DOC أو DOCX، الحد الأقصى 4 ميغابايت)',
     ctInfoTitle: 'معلومات التواصل',
     ctInfoSub: 'اتصل، راسل، أو أرسل رسالة. نحن دائماً هنا.',
     ctBadge: '● متاحون الآن',
@@ -258,7 +262,6 @@ export const ui = {
     ctError: 'يرجى ملء جميع الحقول المطلوبة.',
     ctSubmitError: 'تعذر الإرسال. يرجى الاتصال أو المراسلة مباشرة — انظر بيانات التواصل بجانبك.',
     ctNote: 'نرد خلال ساعتين. طارئ؟ اتصل مباشرة.',
-    footerCopy: 'فيركيرسبلوس سيرفيسز',
     privacy: 'الخصوصية',
     terms: 'الشروط',
     backHome: 'العودة للرئيسية →',
@@ -274,7 +277,7 @@ export const ui = {
     formErv: 'الخبرة', formErvNone: 'بدون خبرة', formErvMin: 'أقل من سنة',
     formErv1_3: '1 – 3 سنوات', formErvPlus: 'أكثر من 3 سنوات',
     formTalen: 'اللغات التي تتحدثها', formTalenPh: 'مثال: هولندي، عربي، إنجليزي',
-    formCV: 'رفع السيرة الذاتية', formCVHint: 'اختر ملفاً أو اسحبه إلى هنا — PDF, DOC, حد أقصى 5 ميغابايت',
+    formCV: 'رفع السيرة الذاتية', formCVHint: 'اختر ملفاً أو اسحبه إلى هنا — PDF, DOC, حد أقصى 4 ميغابايت',
     formBericht: 'هل تريد إضافة شيء آخر؟', formBerichtPh: 'أخبرنا بإيجاز عن نفسك، دوافعك أو متى يمكنك البدء.',
     formBedrijf: 'الشركة', formBedrijfPh: 'اختياري',
     formDienst: 'نوع الطلب', formDienstDefault: 'اختر خدمة',

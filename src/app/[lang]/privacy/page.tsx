@@ -4,8 +4,8 @@ import Footer from '@/components/layout/Footer'
 import { siteConfig } from '@/data/content'
 import type { Lang } from '@/types'
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
-  const { lang } = params
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = (await params).lang as Lang
   const path = lang === 'ar' ? '/ar/privacy' : '/privacy'
 
   return {
@@ -21,8 +21,9 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   }
 }
 
-export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
-  const lastUpdated = new Date().toLocaleDateString(params.lang === 'ar' ? 'ar' : 'nl-NL', { year: 'numeric', month: 'long' })
+export default async function PrivacyPage({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = (await params).lang as Lang
+  const lastUpdated = new Date().toLocaleDateString(lang === 'ar' ? 'ar' : 'nl-NL', { year: 'numeric', month: 'long' })
 
   return (
     <>
@@ -31,7 +32,7 @@ export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
         <section className="py-24">
           <div className="max-w-[760px] mx-auto px-6 md:px-12">
             <span className="stripe" />
-            {params.lang === 'ar' ? (
+            {lang === 'ar' ? (
               <>
                 <p className="eyebrow">{'// الخصوصية'}</p>
                 <h1 className="font-display font-bold text-[clamp(26px,4vw,38px)] text-white mb-8">
@@ -49,7 +50,13 @@ export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
                     <p>
                       عند تعبئة نموذج التواصل أو نموذج التقديم للعمل، نستلم البيانات التي تدخلها بنفسك: الاسم،
                       رقم الهاتف، البريد الإلكتروني، مدينة الإقامة، وعند التقديم للعمل — السيرة الذاتية إن وُجدت.
+                      عند حجز دورة نحفظ أيضاً تاريخ ومكان ميلادك وحالة الدفع، لأنها ضرورية للتسجيل والشهادة.
                       نحن لا نجمع بيانات عبر ملفات تعريف ارتباط تتبعية أو شبكات إعلانية.
+                    </p>
+                    <p className="mt-3">
+                      نستعين لذلك ببعض مقدّمي الخدمات: Mollie (الدفع)، Supabase (حفظ الحجوزات)، Resend (إرسال
+                      البريد الإلكتروني) وVercel (الاستضافة). عند حجز دورة نشارك بياناتك مع شريكنا التعليمي. ولا
+                      يستخدمون بياناتك إلا لهذا الغرض.
                     </p>
                   </div>
 
@@ -101,8 +108,14 @@ export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
                     <p>
                       Wanneer je het contactformulier of het sollicitatieformulier invult, ontvangen wij de gegevens
                       die je zelf invoert: onder andere naam, telefoonnummer, e-mailadres, woonplaats en — bij een
-                      sollicitatie — eventueel een cv. Wij verzamelen geen gegevens via trackingcookies of
-                      advertentienetwerken.
+                      sollicitatie — eventueel een cv. Boek je een opleiding, dan bewaren we ook je geboortedatum,
+                      geboorteplaats en betaalstatus; die zijn nodig voor de inschrijving en het certificaat. Wij
+                      verzamelen geen gegevens via trackingcookies of advertentienetwerken.
+                    </p>
+                    <p className="mt-3">
+                      Hiervoor gebruiken we een paar dienstverleners: Mollie (betalingen), Supabase (opslag van
+                      boekingen), Resend (verzenden van e-mail) en Vercel (hosting). Voor een opleiding delen we je
+                      gegevens met onze opleidingspartner. Zij gebruiken je gegevens alleen voor dit doel.
                     </p>
                   </div>
 

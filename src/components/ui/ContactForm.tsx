@@ -5,7 +5,7 @@ import { useT } from '@/lib/langContext'
 import { useLang } from '@/lib/langContext'
 import { contactInfo, siteConfig } from '@/data/content'
 import { Field, Input, Textarea, Select, FormMessage } from './FormField'
-import { submitToWeb3Forms } from '@/lib/submitForm'
+import { HONEYPOT_NAME, submitForm } from '@/lib/submitForm'
 
 export default function ContactForm() {
   const t = useT()
@@ -32,9 +32,7 @@ export default function ContactForm() {
     }
     setSubmitting(true)
     const form = e.currentTarget
-    const result = await submitToWeb3Forms(new FormData(form), {
-      subject: `Nieuwe offerteaanvraag — ${naam}`,
-    })
+    const result = await submitForm('/api/contact', new FormData(form))
     setSubmitting(false)
     if (result.ok) {
       setMessage({ type: 'success', text: t.ctSuccess })
@@ -58,8 +56,8 @@ export default function ContactForm() {
               const valueEl = (
                 <span className="text-[15px] text-accent-soft">
                   {row.href
-                    ? <a href={row.href} className="hover:underline">{r.value}</a>
-                    : r.value
+                    ? <a href={row.href} className="hover:underline"><bdi dir="ltr">{r.value}</bdi></a>
+                    : <bdi dir="ltr">{r.value}</bdi>
                   }
                 </span>
               )
@@ -87,6 +85,7 @@ export default function ContactForm() {
           <a
             href={`tel:${siteConfig.phoneTel}`}
             className="font-mono text-[18px] font-bold text-accent-soft hover:underline whitespace-nowrap"
+            dir="ltr"
           >
             {siteConfig.phone}
           </a>
@@ -133,6 +132,10 @@ export default function ContactForm() {
             <Field label={t.formOmschrijving} required>
               <Textarea name="bericht" placeholder={t.formOmschrijvingPh} rows={5} required />
             </Field>
+          </div>
+
+          <div aria-hidden className="absolute h-0 w-0 overflow-hidden opacity-0 pointer-events-none">
+            <label>Website<input name={HONEYPOT_NAME} tabIndex={-1} autoComplete="off" /></label>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">

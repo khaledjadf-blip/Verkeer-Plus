@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useLang, useT } from '@/lib/langContext'
 import { localizedHref } from '@/lib/localizedHref'
+import { bookingText } from '@/data/bookingText'
 
 export default function BecomeSteward() {
   const { lang } = useLang()
@@ -23,9 +24,14 @@ export default function BecomeSteward() {
               {t.bannerBody}
             </p>
           </div>
-          <Link href={localizedHref('/werken-bij', lang)} className="btn-outline">
-            {t.bannerBtn} →
-          </Link>
+          <div className="flex flex-wrap gap-3 md:flex-col md:items-stretch">
+            <Link href={localizedHref('/opleiding', lang)} className="btn-primary">
+              {bookingText[lang].bannerCourseBtn} →
+            </Link>
+            <Link href={localizedHref('/werken-bij', lang)} className="btn-outline">
+              {t.bannerBtn} →
+            </Link>
+          </div>
         </div>
       </div>
     </section>

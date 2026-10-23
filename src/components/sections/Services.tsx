@@ -35,7 +35,7 @@ export default function Services() {
               <article key={service.id} className="vp-service-card group">
                 <span className="block h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_16px_rgba(212,25,27,0.8)]" />
 
-                <h3 className="mt-7 font-display text-[clamp(22px,2.45vw,30px)] font-bold leading-[1.04] text-white [overflow-wrap:anywhere]">
+                <h3 className="mt-7 font-display text-[clamp(22px,2vw,28px)] font-bold leading-[1.04] text-white hyphens-auto [overflow-wrap:break-word]">
                   {svc.title}
                 </h3>
                 <p className="mt-4 min-h-[8rem] text-[15px] leading-relaxed text-white/82">
