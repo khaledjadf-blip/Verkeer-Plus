@@ -64,6 +64,7 @@ export const adminText = {
     fDetailsHint: 'Zichtbaar op de website, bijv. aantal lesdagen of wat inbegrepen is.',
     fNotes: 'Interne notitie',
     fNotesHint: 'Alleen zichtbaar voor beheer.',
+    stalePending: 'Niet betaald (verlopen)',
     sessionStatus: { open: 'Open', closed: 'Gesloten', cancelled: 'Geannuleerd' } as Record<CourseSession['status'], string>,
     bookingStatus: {
       pending: 'Wacht op betaling',
@@ -147,6 +148,7 @@ export const adminText = {
     fDetailsHint: 'تظهر على الموقع، مثلاً عدد أيام الدورة أو شو مشمول بالسعر.',
     fNotes: 'ملاحظة داخلية',
     fNotesHint: 'تظهر للإدارة فقط.',
+    stalePending: 'لم يُدفع (انتهت المهلة)',
     sessionStatus: { open: 'مفتوح', closed: 'مغلق', cancelled: 'ملغى' } as Record<CourseSession['status'], string>,
     bookingStatus: {
       pending: 'بانتظار الدفع',

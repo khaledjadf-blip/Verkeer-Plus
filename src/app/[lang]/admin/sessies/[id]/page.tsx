@@ -7,7 +7,7 @@ import { adminText } from '../../text'
 import { AdminHeader, Notice } from '../../ui'
 import { isAdmin } from '@/lib/adminAuth'
 import { localizedHref } from '@/lib/localizedHref'
-import { UUID } from '@/lib/sessions'
+import { UUID, isStalePending } from '@/lib/sessions'
 import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, type Booking, type CourseSession } from '@/lib/supabase'
 import { centsToEuroInput, formatDateTimeNl, formatEuro, isoToAmsterdam } from '@/lib/time'
 import type { Lang } from '@/types'
@@ -94,7 +94,7 @@ export default async function SessionDetailPage({ params, searchParams }: Props)
                       <td className="whitespace-nowrap px-4 py-3"><a href={`tel:${b.phone}`} dir="ltr" className="text-muted">{b.phone}</a></td>
                       <td className="whitespace-nowrap px-4 py-3 text-muted" dir="ltr">{formatEuro(b.amount_cents)}</td>
                       <td className="px-4 py-3">
-                        <span className={b.status === 'paid' ? 'font-bold text-green-400' : 'text-dim'}>{a.bookingStatus[b.status]}</span>
+                        <span className={b.status === 'paid' ? 'font-bold text-green-400' : 'text-dim'}>{isStalePending(b) ? a.stalePending : a.bookingStatus[b.status]}</span>
                       </td>
                       <td className="whitespace-nowrap px-4 py-3 text-dim" dir="ltr">{formatDateTimeNl(b.created_at)}</td>
                       <td className="px-4 py-3">

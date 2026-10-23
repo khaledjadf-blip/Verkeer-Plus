@@ -3,7 +3,12 @@ import 'server-only'
 import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, isSupabaseConfigured } from '@/lib/supabase'
 
 // Must match the 30 minutes in vp_create_booking (supabase/schema.sql).
-const PENDING_HOLD_MINUTES = 30
+export const PENDING_HOLD_MINUTES = 30
+
+/** A booking still waiting for payment after the hold expired: the seat is free again. */
+export function isStalePending(b: { status: string; created_at: string }) {
+  return b.status === 'pending' && Date.now() - new Date(b.created_at).getTime() > PENDING_HOLD_MINUTES * 60_000
+}
 
 export type PublicSession = {
   id: string

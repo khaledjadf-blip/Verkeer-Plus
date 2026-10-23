@@ -5,6 +5,7 @@ import { AdminHeader, Notice } from './ui'
 import { isAdmin, isAdminConfigured } from '@/lib/adminAuth'
 import { explainDbError } from '@/lib/adminDbErrors'
 import { localizedHref } from '@/lib/localizedHref'
+import { PENDING_HOLD_MINUTES } from '@/lib/sessions'
 import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, isSupabaseConfigured, type CourseSession } from '@/lib/supabase'
 import { formatDateTimeNl, formatEuro } from '@/lib/time'
 import type { Lang } from '@/types'
@@ -76,6 +77,7 @@ export default async function AdminPage({ params, searchParams }: Props) {
       .select('session_id')
       .in('session_id', sessions.map((s) => s.id))
       .eq('status', 'pending')
+      .gt('created_at', new Date(Date.now() - PENDING_HOLD_MINUTES * 60_000).toISOString())
     for (const row of rows ?? []) pending.set(row.session_id, (pending.get(row.session_id) ?? 0) + 1)
   }
 
