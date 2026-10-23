@@ -197,7 +197,7 @@ export async function bookingAction(formData: FormData) {
     back(target, explainDbError(error, mode === 'verwijderen' ? 'Verwijderen' : 'Annuleren'))
   }
 
-  if (mode !== 'verwijderen' && formData.get('notify') === 'on') {
+  if (mode !== 'verwijderen' && booking.status === 'paid' && formData.get('notify') === 'on') {
     const sent = await sendCancellationEmails(booking, mode === 'terugbetalen')
     if (!sent) {
       back(target, lang === 'ar'

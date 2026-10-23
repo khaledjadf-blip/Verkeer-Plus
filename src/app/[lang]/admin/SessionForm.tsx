@@ -80,7 +80,7 @@ export default function SessionForm({
           <input type="number" name="seats_total" min={1} max={500} required defaultValue={values.seats_total} className="field-base" dir="ltr" />
         </Field>
         <Field label={a.fLanguage}>
-          <input type="text" name="language" defaultValue={values.language} className="field-base" />
+          <input type="text" name="language" defaultValue={values.language} className="field-base" dir="auto" />
         </Field>
       </div>
 
@@ -93,11 +93,11 @@ export default function SessionForm({
       </Field>
 
       <Field label={a.fDetails} hint={a.fDetailsHint}>
-        <textarea name="details" rows={3} defaultValue={values.details} className="field-base min-h-[90px]" />
+        <textarea name="details" rows={3} defaultValue={values.details} className="field-base min-h-[90px]" dir="auto" />
       </Field>
 
       <Field label={a.fNotes} hint={a.fNotesHint}>
-        <textarea name="notes" rows={3} defaultValue={values.notes} className="field-base min-h-[90px]" />
+        <textarea name="notes" rows={3} defaultValue={values.notes} className="field-base min-h-[90px]" dir="auto" />
       </Field>
 
       <div>

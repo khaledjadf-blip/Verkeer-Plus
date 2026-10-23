@@ -7,7 +7,7 @@ import { explainDbError } from '@/lib/adminDbErrors'
 import { localizedHref } from '@/lib/localizedHref'
 import { PENDING_HOLD_MINUTES } from '@/lib/sessions'
 import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, isSupabaseConfigured, type CourseSession } from '@/lib/supabase'
-import { formatDateTimeNl, formatEuro } from '@/lib/time'
+import { formatDateTime, formatEuro } from '@/lib/time'
 import type { Lang } from '@/types'
 
 type Props = { params: Promise<{ lang: string }>; searchParams: Promise<{ fout?: string; ok?: string; toon?: string }> }
@@ -121,7 +121,7 @@ export default async function AdminPage({ params, searchParams }: Props) {
                 const waiting = pending.get(s.id) ?? 0
                 return (
                   <tr key={s.id} className="border-b border-concrete last:border-b-0">
-                    <td className="whitespace-nowrap px-4 py-3 font-semibold text-white" dir="ltr">{formatDateTimeNl(s.starts_at)}</td>
+                    <td className="whitespace-nowrap px-4 py-3 font-semibold text-white">{formatDateTime(s.starts_at, lang)}</td>
                     <td className="px-4 py-3 text-muted" dir="ltr">{s.location}</td>
                     <td className="whitespace-nowrap px-4 py-3 text-muted" dir="ltr">{formatEuro(s.price_cents)}</td>
                     <td className="whitespace-nowrap px-4 py-3">

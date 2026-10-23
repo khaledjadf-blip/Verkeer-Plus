@@ -60,7 +60,11 @@ export function formatTimeRange(startsAt: string, endsAt: string | null) {
 }
 
 export function formatDateTimeNl(iso: string) {
-  return new Intl.DateTimeFormat('nl-NL', {
+  return formatDateTime(iso, 'nl')
+}
+
+export function formatDateTime(iso: string, lang: 'nl' | 'ar') {
+  return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-u-nu-latn' : 'nl-NL', {
     weekday: 'short',
     day: 'numeric',
     month: 'short',

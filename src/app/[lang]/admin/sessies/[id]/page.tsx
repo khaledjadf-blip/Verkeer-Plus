@@ -9,7 +9,7 @@ import { isAdmin } from '@/lib/adminAuth'
 import { localizedHref } from '@/lib/localizedHref'
 import { UUID, isStalePending } from '@/lib/sessions'
 import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, type Booking, type CourseSession } from '@/lib/supabase'
-import { centsToEuroInput, formatDateTimeNl, formatEuro, isoToAmsterdam } from '@/lib/time'
+import { centsToEuroInput, formatDateTime, formatEuro, isoToAmsterdam } from '@/lib/time'
 import type { Lang } from '@/types'
 
 type Props = { params: Promise<{ lang: string; id: string }>; searchParams: Promise<{ fout?: string; ok?: string }> }
@@ -55,7 +55,7 @@ export default async function SessionDetailPage({ params, searchParams }: Props)
 
   return (
     <div className="max-w-5xl">
-      <AdminHeader lang={lang} title={<bdi dir="ltr">{formatDateTimeNl(session.starts_at)}</bdi>} back={href('/admin')} />
+      <AdminHeader lang={lang} title={formatDateTime(session.starts_at, lang)} back={href('/admin')} />
       <Notice lang={lang} ok={ok} fout={fout} />
 
       <section className="mb-12">
@@ -96,12 +96,12 @@ export default async function SessionDetailPage({ params, searchParams }: Props)
                       <td className="px-4 py-3">
                         <span className={b.status === 'paid' ? 'font-bold text-green-400' : 'text-dim'}>{isStalePending(b) ? a.stalePending : a.bookingStatus[b.status]}</span>
                       </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-dim" dir="ltr">{formatDateTimeNl(b.created_at)}</td>
+                      <td className="whitespace-nowrap px-4 py-3 text-dim">{formatDateTime(b.created_at, lang)}</td>
                       <td className="px-4 py-3">
                         <form action={bookingAction} className="flex flex-wrap justify-end gap-2">
                           <input type="hidden" name="lang" value={lang} />
                           <input type="hidden" name="id" value={b.id} />
-                          {active && (
+                          {b.status === 'paid' && (
                             <label className="flex w-full items-center justify-end gap-2 text-[12px] font-semibold text-dim">
                               <input type="checkbox" name="notify" defaultChecked className="h-4 w-4 accent-[#d4191b]" />
                               {a.notify}
