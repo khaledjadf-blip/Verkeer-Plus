@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function PaymentReturnPage({ searchParams }: { searchParams: { b?: string } }) {
-  const { b } = searchParams
+export default async function PaymentReturnPage({ searchParams }: { searchParams: Promise<{ b?: string }> }) {
+  const { b } = await searchParams
   if (!b || !UUID.test(b)) notFound()
 
   return (

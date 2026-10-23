@@ -9,7 +9,7 @@ import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, isSupabaseConfigured, type
 import { formatDateTimeNl, formatEuro } from '@/lib/time'
 import type { Lang } from '@/types'
 
-type Props = { params: { lang: Lang }; searchParams: { fout?: string; ok?: string; toon?: string } }
+type Props = { params: Promise<{ lang: string }>; searchParams: Promise<{ fout?: string; ok?: string; toon?: string }> }
 
 function LoginForm({ lang, failed }: { lang: Lang; failed: boolean }) {
   const a = adminText[lang]
@@ -46,8 +46,8 @@ function SetupMissing({ lang, items }: { lang: Lang; items: string[] }) {
 }
 
 export default async function AdminPage({ params, searchParams }: Props) {
-  const { lang } = params
-  const { fout, ok, toon } = searchParams
+  const lang = (await params).lang as Lang
+  const { fout, ok, toon } = await searchParams
   const a = adminText[lang]
 
   const missing = [
@@ -56,7 +56,7 @@ export default async function AdminPage({ params, searchParams }: Props) {
   ].filter(Boolean) as string[]
   if (missing.length) return <SetupMissing lang={lang} items={missing} />
 
-  if (!isAdmin()) return <LoginForm lang={lang} failed={fout === 'login'} />
+  if (!(await isAdmin())) return <LoginForm lang={lang} failed={fout === 'login'} />
 
   const showPast = toon === 'afgelopen'
   const now = new Date().toISOString()

@@ -35,11 +35,12 @@ export function checkPassword(input: string) {
   return safeEqual(input, password)
 }
 
-export function startAdminSession() {
+export async function startAdminSession() {
   const key = signingKey()
   if (!key) throw new Error('ADMIN_PASSWORD ontbreekt of is te kort.')
   const expires = Date.now() + SESSION_HOURS * 3600_000
-  cookies().set(COOKIE_NAME, `${expires}.${sign(expires, key)}`, {
+  const store = await cookies()
+  store.set(COOKIE_NAME, `${expires}.${sign(expires, key)}`, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -48,14 +49,15 @@ export function startAdminSession() {
   })
 }
 
-export function endAdminSession() {
-  cookies().set(COOKIE_NAME, '', { httpOnly: true, path: '/', maxAge: 0 })
+export async function endAdminSession() {
+  const store = await cookies()
+  store.set(COOKIE_NAME, '', { httpOnly: true, path: '/', maxAge: 0 })
 }
 
-export function isAdmin() {
+export async function isAdmin() {
   const key = signingKey()
   if (!key) return false
-  const value = cookies().get(COOKIE_NAME)?.value
+  const value = (await cookies()).get(COOKIE_NAME)?.value
   if (!value) return false
   const [expiresText, signature] = value.split('.')
   const expires = Number(expiresText)

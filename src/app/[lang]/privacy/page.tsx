@@ -4,8 +4,8 @@ import Footer from '@/components/layout/Footer'
 import { siteConfig } from '@/data/content'
 import type { Lang } from '@/types'
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
-  const { lang } = params
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = (await params).lang as Lang
   const path = lang === 'ar' ? '/ar/privacy' : '/privacy'
 
   return {
@@ -21,8 +21,9 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   }
 }
 
-export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
-  const lastUpdated = new Date().toLocaleDateString(params.lang === 'ar' ? 'ar' : 'nl-NL', { year: 'numeric', month: 'long' })
+export default async function PrivacyPage({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = (await params).lang as Lang
+  const lastUpdated = new Date().toLocaleDateString(lang === 'ar' ? 'ar' : 'nl-NL', { year: 'numeric', month: 'long' })
 
   return (
     <>
@@ -31,7 +32,7 @@ export default function PrivacyPage({ params }: { params: { lang: Lang } }) {
         <section className="py-24">
           <div className="max-w-[760px] mx-auto px-6 md:px-12">
             <span className="stripe" />
-            {params.lang === 'ar' ? (
+            {lang === 'ar' ? (
               <>
                 <p className="eyebrow">{'// الخصوصية'}</p>
                 <h1 className="font-display font-bold text-[clamp(26px,4vw,38px)] text-white mb-8">

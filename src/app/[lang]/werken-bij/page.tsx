@@ -17,8 +17,8 @@ const content: Record<Lang, { title: string; description: string; ogDescription:
   },
 }
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
-  const { lang } = params
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = (await params).lang as Lang
   const path = lang === 'ar' ? '/ar/werken-bij' : '/werken-bij'
   const c = content[lang]
 

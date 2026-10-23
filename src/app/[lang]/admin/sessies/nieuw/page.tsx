@@ -10,7 +10,7 @@ import { SESSIONS_TABLE, getSupabase, type CourseSession } from '@/lib/supabase'
 import { centsToEuroInput, isoToAmsterdam } from '@/lib/time'
 import type { Lang } from '@/types'
 
-type Props = { params: { lang: Lang }; searchParams: { fout?: string; van?: string } }
+type Props = { params: Promise<{ lang: string }>; searchParams: Promise<{ fout?: string; van?: string }> }
 
 // "Make a copy": same details, one week later.
 async function copyFrom(id: string): Promise<SessionFormValues | null> {
@@ -34,15 +34,16 @@ async function copyFrom(id: string): Promise<SessionFormValues | null> {
 }
 
 export default async function NewSessionPage({ params, searchParams }: Props) {
-  const { lang } = params
-  if (!isAdmin()) redirect(localizedHref('/admin', lang))
+  const lang = (await params).lang as Lang
+  const { fout, van } = await searchParams
+  if (!(await isAdmin())) redirect(localizedHref('/admin', lang))
   const a = adminText[lang]
-  const values = (searchParams.van && (await copyFrom(searchParams.van))) || emptySessionForm
+  const values = (van && (await copyFrom(van))) || emptySessionForm
 
   return (
     <div className="max-w-3xl">
       <AdminHeader lang={lang} title={a.newTitle} back={localizedHref('/admin', lang)} />
-      <Notice lang={lang} fout={searchParams.fout} />
+      <Notice lang={lang} fout={fout} />
       <SessionForm lang={lang} action={createSessionAction} values={values} submitLabel={a.saveNew} />
     </div>
   )

@@ -24,8 +24,8 @@ function back(target: string, message: string): never {
   redirect(`${target}${target.includes('?') ? '&' : '?'}fout=${encodeURIComponent(message)}`)
 }
 
-function requireAdmin(lang: Lang) {
-  if (!isAdmin()) redirect(path(lang, '/admin'))
+async function requireAdmin(lang: Lang) {
+  if (!(await isAdmin())) redirect(path(lang, '/admin'))
 }
 
 export async function loginAction(formData: FormData) {
@@ -35,12 +35,12 @@ export async function loginAction(formData: FormData) {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     redirect(`${path(lang, '/admin')}?fout=login`)
   }
-  startAdminSession()
+  await startAdminSession()
   redirect(path(lang, '/admin'))
 }
 
 export async function logoutAction(formData: FormData) {
-  endAdminSession()
+  await endAdminSession()
   redirect(path(readLang(formData), '/admin'))
 }
 
@@ -99,7 +99,7 @@ function readSessionForm(formData: FormData, lang: Lang): SessionInput | string 
 
 export async function createSessionAction(formData: FormData) {
   const lang = readLang(formData)
-  requireAdmin(lang)
+  await requireAdmin(lang)
   const input = readSessionForm(formData, lang)
   if (typeof input === 'string') back(path(lang, '/admin/sessies/nieuw'), input)
 
@@ -113,7 +113,7 @@ export async function createSessionAction(formData: FormData) {
 
 export async function updateSessionAction(formData: FormData) {
   const lang = readLang(formData)
-  requireAdmin(lang)
+  await requireAdmin(lang)
   const id = String(formData.get('id') ?? '')
   const target = path(lang, `/admin/sessies/${id}`)
   const input = readSessionForm(formData, lang)
@@ -138,7 +138,7 @@ export async function updateSessionAction(formData: FormData) {
 
 export async function deleteSessionAction(formData: FormData) {
   const lang = readLang(formData)
-  requireAdmin(lang)
+  await requireAdmin(lang)
   const id = String(formData.get('id') ?? '')
   const target = path(lang, `/admin/sessies/${id}`)
   const supabase = getSupabase()
@@ -166,7 +166,7 @@ export async function deleteSessionAction(formData: FormData) {
 
 export async function bookingAction(formData: FormData) {
   const lang = readLang(formData)
-  requireAdmin(lang)
+  await requireAdmin(lang)
   const id = String(formData.get('id') ?? '')
   const mode = String(formData.get('mode') ?? '')
 

@@ -42,8 +42,8 @@ const descriptions: Record<Lang, string> = {
   ar: 'توظيف منظمي حركة مرور معتمدين لأعمال الطرق والفعاليات والطوارئ. فيركيرسبلوس سيرفيسز — تغطية على مستوى هولندا، متاحون على مدار الساعة.',
 }
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
-  const { lang } = params
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = (await params).lang as Lang
   const path = lang === 'ar' ? '/ar' : '/'
 
   return {
@@ -104,14 +104,14 @@ const localBusinessSchema = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: { lang: Lang }
+  params: Promise<{ lang: string }>
 }) {
-  const { lang } = params
+  const lang = (await params).lang as Lang
   const dir = lang === 'ar' ? 'rtl' : 'ltr'
 
   return (

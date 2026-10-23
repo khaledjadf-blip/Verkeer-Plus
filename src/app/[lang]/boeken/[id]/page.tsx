@@ -19,8 +19,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 }
 
-export default async function BookingPage({ params }: { params: { lang: Lang; id: string } }) {
-  const { lang, id } = params
+export default async function BookingPage({ params }: { params: Promise<{ lang: string; id: string }> }) {
+  const { id } = await params
+  const lang = (await params).lang as Lang
   const session = await getPublicSession(id)
   if (!session) notFound()
   const b = bookingText[lang]

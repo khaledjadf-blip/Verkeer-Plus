@@ -7,8 +7,8 @@ export const dynamic = 'force-dynamic'
 
 // Used by the thank-you page. Also checks the payment with Mollie itself,
 // in case the webhook has not arrived (yet).
-export async function GET(_request: Request, { params }: { params: { id: string } }) {
-  const { id } = params
+export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   if (!UUID.test(id) || !isSupabaseConfigured()) return NextResponse.json({ status: 'unknown' }, { status: 404 })
 
   const { data: booking } = await getSupabase()

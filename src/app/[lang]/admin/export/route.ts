@@ -17,7 +17,7 @@ function csvCell(value: unknown) {
 }
 
 export async function GET(request: Request) {
-  if (!isAdmin()) return NextResponse.redirect(new URL('/admin', request.url))
+  if (!(await isAdmin())) return NextResponse.redirect(new URL('/admin', request.url))
 
   const sessionId = new URL(request.url).searchParams.get('sessie')
   let query = getSupabase()

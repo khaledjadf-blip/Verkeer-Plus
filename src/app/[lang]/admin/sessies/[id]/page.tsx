@@ -12,13 +12,15 @@ import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, type Booking, type CourseS
 import { centsToEuroInput, formatDateTimeNl, formatEuro, isoToAmsterdam } from '@/lib/time'
 import type { Lang } from '@/types'
 
-type Props = { params: { lang: Lang; id: string }; searchParams: { fout?: string; ok?: string } }
+type Props = { params: Promise<{ lang: string; id: string }>; searchParams: Promise<{ fout?: string; ok?: string }> }
 
 const smallBtn = 'inline-flex items-center border px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.06em] transition-colors'
 
 export default async function SessionDetailPage({ params, searchParams }: Props) {
-  const { lang, id } = params
-  if (!isAdmin()) redirect(localizedHref('/admin', lang))
+  const { id } = await params
+  const lang = (await params).lang as Lang
+  const { fout, ok } = await searchParams
+  if (!(await isAdmin())) redirect(localizedHref('/admin', lang))
   if (!UUID.test(id)) notFound()
   const a = adminText[lang]
 
@@ -54,7 +56,7 @@ export default async function SessionDetailPage({ params, searchParams }: Props)
   return (
     <div className="max-w-5xl">
       <AdminHeader lang={lang} title={<bdi dir="ltr">{formatDateTimeNl(session.starts_at)}</bdi>} back={href('/admin')} />
-      <Notice lang={lang} ok={searchParams.ok} fout={searchParams.fout} />
+      <Notice lang={lang} ok={ok} fout={fout} />
 
       <section className="mb-12">
         <div className="mb-4 flex flex-wrap items-end justify-between gap-3">

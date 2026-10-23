@@ -21,8 +21,8 @@ const meta: Record<Lang, { title: string; description: string }> = {
   },
 }
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
-  const { lang } = params
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = (await params).lang as Lang
   return {
     title: meta[lang].title,
     description: meta[lang].description,
@@ -34,8 +34,8 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   }
 }
 
-export default async function CoursePage({ params }: { params: { lang: Lang } }) {
-  const { lang } = params
+export default async function CoursePage({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = (await params).lang as Lang
   const c = course[lang]
   const b = bookingText[lang]
   const sessions = await getUpcomingSessions()
