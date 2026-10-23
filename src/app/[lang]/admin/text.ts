@@ -65,6 +65,9 @@ export const adminText = {
     fNotes: 'Interne notitie',
     fNotesHint: 'Alleen zichtbaar voor beheer.',
     stalePending: 'Niet betaald (verlopen)',
+    showUnpaid: (n: number) => `Toon ook ${n} niet-betaalde aanmelding(en)`,
+    hideUnpaid: 'Verberg niet-betaalde aanmeldingen',
+    noPaidBookings: 'Nog geen betaalde boekingen voor deze datum.',
     sessionStatus: { open: 'Open', closed: 'Gesloten', cancelled: 'Geannuleerd' } as Record<CourseSession['status'], string>,
     bookingStatus: {
       pending: 'Wacht op betaling',
@@ -149,6 +152,9 @@ export const adminText = {
     fNotes: 'ملاحظة داخلية',
     fNotesHint: 'تظهر للإدارة فقط.',
     stalePending: 'لم يُدفع (انتهت المهلة)',
+    showUnpaid: (n: number) => `إظهار ${n} طلبات غير مدفوعة أيضاً`,
+    hideUnpaid: 'إخفاء الطلبات غير المدفوعة',
+    noPaidBookings: 'لا توجد حجوزات مدفوعة لهذا الموعد بعد.',
     sessionStatus: { open: 'مفتوح', closed: 'مغلق', cancelled: 'ملغى' } as Record<CourseSession['status'], string>,
     bookingStatus: {
       pending: 'بانتظار الدفع',

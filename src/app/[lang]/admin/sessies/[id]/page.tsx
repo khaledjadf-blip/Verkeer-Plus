@@ -7,19 +7,19 @@ import { adminText } from '../../text'
 import { AdminHeader, Notice } from '../../ui'
 import { isAdmin } from '@/lib/adminAuth'
 import { localizedHref } from '@/lib/localizedHref'
-import { UUID, isStalePending } from '@/lib/sessions'
+import { UUID, isStalePending, isUnfinished } from '@/lib/sessions'
 import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase, type Booking, type CourseSession } from '@/lib/supabase'
 import { centsToEuroInput, formatDateTime, formatEuro, isoToAmsterdam } from '@/lib/time'
 import type { Lang } from '@/types'
 
-type Props = { params: Promise<{ lang: string; id: string }>; searchParams: Promise<{ fout?: string; ok?: string }> }
+type Props = { params: Promise<{ lang: string; id: string }>; searchParams: Promise<{ fout?: string; ok?: string; alles?: string }> }
 
 const smallBtn = 'inline-flex items-center border px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.06em] transition-colors'
 
 export default async function SessionDetailPage({ params, searchParams }: Props) {
   const { id } = await params
   const lang = (await params).lang as Lang
-  const { fout, ok } = await searchParams
+  const { fout, ok, alles } = await searchParams
   if (!(await isAdmin())) redirect(localizedHref('/admin', lang))
   if (!UUID.test(id)) notFound()
   const a = adminText[lang]
@@ -34,8 +34,12 @@ export default async function SessionDetailPage({ params, searchParams }: Props)
     .select('*')
     .eq('session_id', id)
     .order('created_at', { ascending: true })
-  const bookings = (bookingRows ?? []) as Booking[]
-  const paidCount = bookings.filter((b) => b.status === 'paid').length
+  const allBookings = (bookingRows ?? []) as Booking[]
+  const paidCount = allBookings.filter((b) => b.status === 'paid').length
+  // Never-paid sign-ups are hidden unless asked for, so the list shows real participants.
+  const unfinished = allBookings.filter(isUnfinished).length
+  const showAll = alles === '1'
+  const bookings = showAll ? allBookings : allBookings.filter((b) => !isUnfinished(b))
 
   const start = isoToAmsterdam(session.starts_at)
   const values = {
@@ -67,8 +71,19 @@ export default async function SessionDetailPage({ params, searchParams }: Props)
           <a href={`${href('/admin/export')}?sessie=${session.id}`} className="btn-outline">{a.exportThis}</a>
         </div>
 
+        {unfinished > 0 && (
+          <p className="mb-3 text-[13px]">
+            <Link
+              href={showAll ? href(`/admin/sessies/${session.id}`) : `${href(`/admin/sessies/${session.id}`)}?alles=1`}
+              className="font-semibold text-accent-soft underline underline-offset-4"
+            >
+              {showAll ? a.hideUnpaid : a.showUnpaid(unfinished)}
+            </Link>
+          </p>
+        )}
+
         {bookings.length === 0 ? (
-          <p className="rounded-xl border border-concrete bg-raised p-6 text-dim">{a.noBookings}</p>
+          <p className="rounded-xl border border-concrete bg-raised p-6 text-dim">{unfinished ? a.noPaidBookings : a.noBookings}</p>
         ) : (
           <div className="overflow-x-auto rounded-xl border border-concrete bg-raised">
             <table className="w-full min-w-[980px] text-[14px]">

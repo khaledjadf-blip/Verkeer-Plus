@@ -10,6 +10,11 @@ export function isStalePending(b: { status: string; created_at: string }) {
   return b.status === 'pending' && Date.now() - new Date(b.created_at).getTime() > PENDING_HOLD_MINUTES * 60_000
 }
 
+/** A sign-up that was never paid: expired, failed, or abandoned at checkout. */
+export function isUnfinished(b: { status: string; created_at: string; paid_at: string | null }) {
+  return isStalePending(b) || b.status === 'expired' || b.status === 'failed' || (b.status === 'canceled' && !b.paid_at)
+}
+
 export type PublicSession = {
   id: string
   courseSlug: string

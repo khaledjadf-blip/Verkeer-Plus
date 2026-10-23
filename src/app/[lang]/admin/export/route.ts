@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { courseTitleNl } from '@/data/course'
 import { adminText } from '../text'
 import { isAdmin } from '@/lib/adminAuth'
-import { UUID } from '@/lib/sessions'
+import { UUID, isStalePending } from '@/lib/sessions'
 import { BOOKINGS_TABLE, getSupabase, type BookingWithSession } from '@/lib/supabase'
 import { formatDateTimeNl } from '@/lib/time'
 
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
       b.birth_place ?? '',
       b.company ?? '',
       (b.amount_cents / 100).toFixed(2).replace('.', ','),
-      labels[b.status] ?? b.status,
+      isStalePending(b) ? adminText.nl.stalePending : labels[b.status] ?? b.status,
       b.paid_at ? formatDateTimeNl(b.paid_at) : '',
       formatDateTimeNl(b.created_at),
       b.notes ?? '',
