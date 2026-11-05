@@ -9,6 +9,7 @@ import { localizedHref } from '@/lib/localizedHref'
 import { getPaymentProvider } from '@/lib/payments'
 import { BOOKINGS_TABLE, SESSIONS_TABLE, getSupabase } from '@/lib/supabase'
 import { amsterdamToIso, euroToCents } from '@/lib/time'
+import { VAT_PERCENT } from '@/lib/vat'
 import type { Lang } from '@/types'
 
 const statuses = new Set(['open', 'closed', 'cancelled'])
@@ -51,6 +52,7 @@ type SessionInput = {
   location: string
   language: string
   price_cents: number
+  vat_percent: number
   seats_total: number
   status: string
   details: string | null
@@ -90,6 +92,7 @@ function readSessionForm(formData: FormData, lang: Lang): SessionInput | string 
     location,
     language: text('language') || 'Nederlands',
     price_cents,
+    vat_percent: VAT_PERCENT,
     seats_total,
     status,
     details: text('details') || null,

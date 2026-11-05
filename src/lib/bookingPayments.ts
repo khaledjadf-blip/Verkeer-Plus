@@ -47,6 +47,8 @@ function customerEmailHtml(b: BookingWithSession) {
   const name = escapeHtml(b.first_name)
   const time = escapeHtml(formatTimeRange(s.starts_at, s.ends_at))
   const amount = escapeHtml(formatEuro(b.amount_cents))
+  const excl = escapeHtml(formatEuro(b.amount_cents - b.vat_cents))
+  const vat = escapeHtml(formatEuro(b.vat_cents))
   const phone = escapeHtml(siteConfig.phone)
   const email = escapeHtml(siteConfig.email)
 
@@ -59,7 +61,9 @@ function customerEmailHtml(b: BookingWithSession) {
     ${row('Datum', escapeHtml(formatDate(s.starts_at, 'nl')))}
     ${row('Tijd', time)}
     ${row('Locatie', location)}
-    ${row('Betaald', amount)}
+    ${row('Prijs excl. btw', excl)}
+    ${row(`Btw ${b.vat_percent}%`, vat)}
+    ${row('Totaal betaald', `<strong>${amount}</strong>`)}
   </table>
   <p>Neem op de opleidingsdag een geldig identiteitsbewijs mee (paspoort, ID-kaart of rijbewijs). Kom graag 15 minuten voor aanvang.</p>
   <p>Annuleren is kosteloos tot 7 dagen voor de startdatum: stuur dan een e-mail naar ${email}. Daarna is terugbetaling niet mogelijk. Zie onze <a href="${termsUrl.nl}">voorwaarden</a>.</p>
@@ -75,7 +79,9 @@ function customerEmailHtml(b: BookingWithSession) {
       ${row('التاريخ', escapeHtml(formatDate(s.starts_at, 'ar')), true)}
       ${row('الوقت', `${ltr(time)}`, true)}
       ${row('المكان', `${ltr(location)}`, true)}
-      ${row('المبلغ المدفوع', `${ltr(amount)}`, true)}
+      ${row('السعر بدون ضريبة', ltr(excl), true)}
+      ${row(`ضريبة القيمة المضافة ${b.vat_percent}%`, ltr(vat), true)}
+      ${row('المجموع المدفوع', `<strong>${ltr(amount)}</strong>`, true)}
     </table>
     <p>أحضر معك يوم الدورة إثبات هوية ساري المفعول (جواز سفر أو بطاقة هوية أو رخصة قيادة). يرجى الحضور قبل 15 دقيقة من البداية.</p>
     <p>الإلغاء مجاني حتى 7 أيام قبل موعد بدء الدورة: أرسل إيميل إلى ${ltr(email)}. بعد ذلك لا يمكن إرجاع المبلغ. اقرأ <a href="${termsUrl.ar}">الشروط</a>.</p>
@@ -105,7 +111,9 @@ async function sendConfirmationEmails(b: BookingWithSession) {
         ['Bedrijf', b.company],
         ['Opmerking', b.notes],
         ['Taal website', b.lang === 'ar' ? 'Arabisch' : 'Nederlands'],
-        ['Bedrag', formatEuro(b.amount_cents)],
+        ['Prijs excl. btw', formatEuro(b.amount_cents - b.vat_cents)],
+        [`Btw ${b.vat_percent}%`, formatEuro(b.vat_cents)],
+        ['Totaal betaald', formatEuro(b.amount_cents)],
         ['Betaal-ID', b.payment_id],
         ['Plekken bezet', `${s.seats_taken} / ${s.seats_total}`],
       ]),

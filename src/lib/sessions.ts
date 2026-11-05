@@ -22,7 +22,9 @@ export type PublicSession = {
   endsAt: string | null
   location: string
   language: string
+  /** Price excl. btw. */
   priceCents: number
+  vatPercent: number
   seatsLeft: number
   status: 'open' | 'closed'
   details: string | null
@@ -36,13 +38,14 @@ type SessionRow = {
   location: string
   language: string
   price_cents: number
+  vat_percent: number
   seats_total: number
   seats_taken: number
   status: 'open' | 'closed'
   details: string | null
 }
 
-const PUBLIC_COLUMNS = 'id, course_slug, starts_at, ends_at, location, language, price_cents, seats_total, seats_taken, status, details'
+const PUBLIC_COLUMNS = 'id, course_slug, starts_at, ends_at, location, language, price_cents, vat_percent, seats_total, seats_taken, status, details'
 
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
@@ -69,6 +72,7 @@ async function withSeatsLeft(sessions: SessionRow[]): Promise<PublicSession[]> {
     location: s.location,
     language: s.language,
     priceCents: s.price_cents,
+    vatPercent: s.vat_percent,
     seatsLeft: Math.max(0, s.seats_total - s.seats_taken - (held.get(s.id) ?? 0)),
     status: s.status,
     details: s.details,

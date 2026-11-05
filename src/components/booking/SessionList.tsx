@@ -3,6 +3,7 @@ import { bookingText } from '@/data/bookingText'
 import { localizedHref } from '@/lib/localizedHref'
 import type { PublicSession } from '@/lib/sessions'
 import { formatDate, formatEuro, formatTimeRange } from '@/lib/time'
+import { priceBreakdown } from '@/lib/vat'
 import type { Lang } from '@/types'
 
 function Meta({ session, lang }: { session: PublicSession; lang: Lang }) {
@@ -40,7 +41,15 @@ export function SessionList({ sessions, lang }: { sessions: PublicSession[]; lan
           <li key={s.id} className="grid gap-4 border border-concrete bg-card p-5 sm:grid-cols-[1fr_auto] sm:items-center sm:p-6">
             <Meta session={s} lang={lang} />
             <div className="flex flex-wrap items-center gap-3 sm:flex-col sm:items-end">
-              <span dir="ltr" className="font-display text-[26px] font-bold text-white">{formatEuro(s.priceCents)}</span>
+              <div className="text-start sm:text-end">
+                <p className="flex items-baseline gap-1.5 sm:justify-end">
+                  <bdi dir="ltr" className="font-display text-[26px] font-bold text-white">{formatEuro(s.priceCents)}</bdi>
+                  <span className="text-[12px] text-dim">{b.exclVat}</span>
+                </p>
+                <p className="text-[12px] text-dim">
+                  <bdi dir="ltr">{formatEuro(priceBreakdown(s.priceCents, s.vatPercent).total)}</bdi> {b.inclVat}
+                </p>
+              </div>
               {full ? (
                 <span className="border border-concrete px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-dim">{b.full}</span>
               ) : (
@@ -64,16 +73,26 @@ export function SessionList({ sessions, lang }: { sessions: PublicSession[]; lan
 export function SessionSummary({ session, lang, title }: { session: PublicSession; lang: Lang; title: string }) {
   const b = bookingText[lang]
   const full = session.status === 'closed' || session.seatsLeft === 0
+  const price = priceBreakdown(session.priceCents, session.vatPercent)
   return (
     <aside className="order-first grid gap-4 rounded-xl border border-concrete bg-raised p-6 lg:order-none">
       <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-soft">{b.yourChoice}</p>
       <h2 className="font-display text-[20px] font-bold text-white">{title}</h2>
       <Meta session={session} lang={lang} />
-      <div className="flex items-baseline justify-between border-t border-concrete pt-4">
-        <span className="text-[13px] text-dim">{b.price}</span>
-        <span dir="ltr" className="font-display text-[28px] font-bold text-white">{formatEuro(session.priceCents)}</span>
-      </div>
-      <p className="-mt-2 text-[12px] text-dim">{b.inclVat}</p>
+      <dl className="grid gap-2 border-t border-concrete pt-4 text-[14px]">
+        <div className="flex items-baseline justify-between">
+          <dt className="text-dim">{b.priceExcl}</dt>
+          <dd><bdi dir="ltr" className="text-white">{formatEuro(price.excl)}</bdi></dd>
+        </div>
+        <div className="flex items-baseline justify-between">
+          <dt className="text-dim">{b.vatLine(price.vatPercent)}</dt>
+          <dd><bdi dir="ltr" className="text-white">{formatEuro(price.vat)}</bdi></dd>
+        </div>
+        <div className="flex items-baseline justify-between border-t border-concrete pt-3">
+          <dt className="font-semibold text-white">{b.totalToPay}</dt>
+          <dd><bdi dir="ltr" className="font-display text-[26px] font-bold text-white">{formatEuro(price.total)}</bdi></dd>
+        </div>
+      </dl>
       {!full && <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-green-400">{b.seatsLeft(session.seatsLeft)}</p>}
     </aside>
   )

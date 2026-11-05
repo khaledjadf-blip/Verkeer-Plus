@@ -16,6 +16,8 @@ function csvCell(value: unknown) {
   return /[";\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text
 }
 
+const euro = (cents: number) => (cents / 100).toFixed(2).replace('.', ',')
+
 export async function GET(request: Request) {
   if (!(await isAdmin())) return NextResponse.redirect(new URL('/admin', request.url))
 
@@ -34,7 +36,7 @@ export async function GET(request: Request) {
   const labels = adminText.nl.bookingStatus
   const header = [
     'Opleiding', 'Startdatum', 'Locatie', 'Voornaam', 'Achternaam', 'E-mail', 'Telefoon',
-    'Geboortedatum', 'Geboorteplaats', 'Bedrijf', 'Bedrag (EUR)', 'Status', 'Betaald op', 'Geboekt op', 'Opmerking',
+    'Geboortedatum', 'Geboorteplaats', 'Bedrijf', 'Excl. btw (EUR)', 'Btw (EUR)', 'Totaal incl. btw (EUR)', 'Status', 'Betaald op', 'Geboekt op', 'Opmerking',
   ]
   const rows = ((data ?? []) as BookingWithSession[]).map((b) => {
     const s = b.vp_course_sessions
@@ -49,7 +51,9 @@ export async function GET(request: Request) {
       b.birth_date ?? '',
       b.birth_place ?? '',
       b.company ?? '',
-      (b.amount_cents / 100).toFixed(2).replace('.', ','),
+      euro(b.amount_cents - b.vat_cents),
+      euro(b.vat_cents),
+      euro(b.amount_cents),
       isStalePending(b) ? adminText.nl.stalePending : labels[b.status] ?? b.status,
       b.paid_at ? formatDateTimeNl(b.paid_at) : '',
       formatDateTimeNl(b.created_at),
