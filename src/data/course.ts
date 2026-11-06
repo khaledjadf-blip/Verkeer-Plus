@@ -3,6 +3,9 @@ export const COURSE_SLUG = 'beroepsverkeersregelaar'
 
 export const MIN_AGE = 18
 
+/** Standard course price excl. btw: shown on the course page and pre-filled for new dates in /admin. */
+export const COURSE_PRICE_CENTS = 75000
+
 export const course = {
   slug: COURSE_SLUG,
   nl: {
@@ -15,6 +18,7 @@ export const course = {
       'Direct online boeken en betalen met iDEAL of creditcard',
       'Na je certificering kun je bij Verkeersplus aan de slag',
     ],
+    priceLabel: 'Prijs',
     requirementsTitle: 'Wat heb je nodig?',
     requirements: [
       `Je bent minimaal ${MIN_AGE} jaar`,
@@ -32,6 +36,7 @@ export const course = {
       'حجز ودفع مباشر عبر iDEAL أو البطاقة البنكية',
       'بعد حصولك على الشهادة يمكنك العمل مع فيركيرسبلوس',
     ],
+    priceLabel: 'السعر',
     requirementsTitle: 'ماذا تحتاج؟',
     requirements: [
       `عمرك ${MIN_AGE} سنة على الأقل`,
