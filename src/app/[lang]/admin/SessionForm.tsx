@@ -1,4 +1,6 @@
 import { adminText } from './text'
+import { COURSE_PRICE_CENTS } from '@/data/course'
+import { centsToEuroInput } from '@/lib/time'
 import type { Lang } from '@/types'
 
 export type SessionFormValues = {
@@ -21,7 +23,7 @@ export const emptySessionForm: SessionFormValues = {
   end_time: '16:30',
   location: '',
   language: 'Nederlands',
-  price: '',
+  price: centsToEuroInput(COURSE_PRICE_CENTS),
   seats_total: '12',
   status: 'open',
   details: '',

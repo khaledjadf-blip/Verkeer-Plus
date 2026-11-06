@@ -3,7 +3,8 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { SessionList } from '@/components/booking/SessionList'
 import { bookingText } from '@/data/bookingText'
-import { course } from '@/data/course'
+import { COURSE_PRICE_CENTS, course } from '@/data/course'
+import { formatEuro } from '@/lib/time'
 import { getUpcomingSessions } from '@/lib/sessions'
 import type { Lang } from '@/types'
 
@@ -62,6 +63,13 @@ export default async function CoursePage({ params }: { params: Promise<{ lang: s
             </div>
 
             <aside className="grid gap-6">
+              <div className="rounded-xl border border-concrete bg-raised p-6">
+                <p className="text-[13px] text-dim">{c.priceLabel}</p>
+                <p className="mt-1 flex items-baseline gap-1.5">
+                  <bdi dir="ltr" className="font-display text-[32px] font-bold text-white">{formatEuro(COURSE_PRICE_CENTS)}</bdi>
+                  <span className="text-[13px] text-dim">{b.exclVat}</span>
+                </p>
+              </div>
               <div className="rounded-xl border border-concrete bg-raised p-6">
                 <ul className="space-y-3.5">
                   {c.points.map((point) => (
