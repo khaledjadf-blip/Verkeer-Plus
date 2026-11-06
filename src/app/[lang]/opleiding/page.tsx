@@ -48,7 +48,7 @@ export default async function CoursePage({ params }: { params: Promise<{ lang: s
           <div className="mx-auto max-w-[1120px] px-6 pt-16 md:px-12">
             <span className="stripe" />
             <p className="eyebrow">{c.eyebrow}</p>
-            <h1 className="mb-5 font-display text-[clamp(28px,5vw,46px)] font-bold leading-[1.12] text-white">{c.title}</h1>
+            <h1 className="mb-5 font-display text-[clamp(24px,5vw,46px)] font-bold leading-[1.12] text-white">{c.title}</h1>
             <p className="max-w-[640px] text-[17px] leading-relaxed text-muted">{c.intro}</p>
           </div>
         </section>

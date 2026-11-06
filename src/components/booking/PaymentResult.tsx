@@ -30,13 +30,17 @@ export default function PaymentResult({ bookingId }: { bookingId: string }) {
       count += 1
       try {
         const res = await fetch(`/api/bookings/${bookingId}/status`, { cache: 'no-store' })
+        if (!res.ok && res.status !== 404) throw new Error(`Status ${res.status}`)
         const body: Result = await res.json()
         if (cancelled) return
         setResult(body)
         setChecks(count)
         if (body.status === 'pending' && count < MAX_CHECKS) timer = setTimeout(check, 3000)
       } catch {
-        if (!cancelled && count < MAX_CHECKS) timer = setTimeout(check, 3000)
+        if (cancelled) return
+        // Count failed checks too, so the page never keeps checking forever.
+        setChecks(count)
+        if (count < MAX_CHECKS) timer = setTimeout(check, 3000)
       }
     }
     check()
@@ -51,7 +55,9 @@ export default function PaymentResult({ bookingId }: { bookingId: string }) {
   const body = 'mt-3 text-[15px] leading-relaxed text-muted'
   const phone = <a href={`tel:${siteConfig.phoneTel}`} dir="ltr" className="font-bold text-accent-soft hover:underline">{siteConfig.phone}</a>
 
-  if (!result || (status === 'pending' && checks < MAX_CHECKS)) {
+  const stillChecking = checks < MAX_CHECKS
+
+  if ((!result || status === 'pending') && stillChecking) {
     return (
       <Card>
         <h1 className={title}>{b.checkingTitle}</h1>
@@ -71,7 +77,7 @@ export default function PaymentResult({ bookingId }: { bookingId: string }) {
     )
   }
 
-  if (status === 'pending') {
+  if (!result || status === 'pending') {
     return (
       <Card>
         <h1 className={title}>{b.pendingTitle}</h1>
