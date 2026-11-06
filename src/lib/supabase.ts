@@ -15,7 +15,9 @@ export type CourseSession = {
   ends_at: string | null
   location: string
   language: string
+  /** Price excl. btw. */
   price_cents: number
+  vat_percent: number
   seats_total: number
   seats_taken: number
   status: 'open' | 'closed' | 'cancelled'
@@ -39,7 +41,10 @@ export type Booking = {
   company: string | null
   notes: string | null
   lang: 'nl' | 'ar'
+  /** Total paid incl. btw. */
   amount_cents: number
+  vat_percent: number
+  vat_cents: number
   status: BookingStatus
   payment_provider: string | null
   payment_id: string | null

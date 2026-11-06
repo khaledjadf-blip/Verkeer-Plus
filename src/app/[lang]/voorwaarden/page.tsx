@@ -88,7 +88,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
                         <h3 className="font-display font-bold text-[16px] text-white mb-1.5">التسجيل والدفع</h3>
                         <p>
                           تحجز الدورة عبر هذا الموقع وتدفع مسبقاً عبر iDEAL أو البطاقة البنكية (عبر Mollie). يصبح التسجيل
-                          نهائياً فقط بعد استلام الدفعة، وعندها تصلك رسالة تأكيد بالبريد الإلكتروني. يقدّم الدورة شريكنا التعليمي.
+                          نهائياً فقط بعد استلام الدفعة، وعندها تصلك رسالة تأكيد بالبريد الإلكتروني.
+                          الأسعار على الموقع بدون ضريبة القيمة المضافة؛ تُضاف الضريبة (21%) تلقائياً، وترى المبلغ الإجمالي قبل الدفع. يقدّم الدورة شريكنا التعليمي.
                         </p>
                       </div>
                       <div>
@@ -185,6 +186,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
                         <p>
                           Je boekt de opleiding via deze website en betaalt vooraf met iDEAL of creditcard (via Mollie). Je
                           inschrijving is definitief zodra de betaling binnen is; je ontvangt dan een bevestiging per e-mail.
+                          De prijzen op de website zijn exclusief btw; de btw (21%) wordt automatisch opgeteld en je ziet het
+                          totaalbedrag voordat je betaalt.
                           De opleiding wordt gegeven door onze opleidingspartner.
                         </p>
                       </div>

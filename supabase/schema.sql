@@ -33,6 +33,10 @@ create table if not exists public.vp_course_sessions (
   check (ends_at is null or ends_at > starts_at)
 );
 
+-- Prices are entered excl. btw; the btw rate is stored per date so old dates keep their rate.
+alter table public.vp_course_sessions add column if not exists vat_percent integer not null default 21
+  check (vat_percent between 0 and 100);
+
 create index if not exists vp_course_sessions_starts_idx
   on public.vp_course_sessions (course_slug, starts_at);
 
@@ -61,6 +65,11 @@ create table if not exists public.vp_bookings (
   created_at          timestamptz not null default now(),
   updated_at          timestamptz not null default now()
 );
+
+-- amount_cents is the total paid incl. btw; vat_cents is the btw part of it.
+-- Bookings made before btw was added keep 0 (they were paid without btw).
+alter table public.vp_bookings add column if not exists vat_percent integer not null default 0;
+alter table public.vp_bookings add column if not exists vat_cents integer not null default 0 check (vat_cents >= 0);
 
 create index if not exists vp_bookings_session_idx on public.vp_bookings (session_id);
 create index if not exists vp_bookings_status_idx on public.vp_bookings (status);
@@ -107,6 +116,7 @@ as $$
 declare
   v_session public.vp_course_sessions;
   v_held    integer;
+  v_vat     integer;
   v_booking public.vp_bookings;
 begin
   -- Rij vergrendelen zodat twee gelijktijdige boekingen elkaar niet inhalen.
@@ -129,13 +139,18 @@ begin
     raise exception 'SESSION_FULL';
   end if;
 
+  -- btw on top of the price excl. btw, rounded to whole cents.
+  v_vat := round(v_session.price_cents * v_session.vat_percent / 100.0);
+
   insert into public.vp_bookings (
     session_id, first_name, last_name, email, phone,
-    birth_date, birth_place, company, notes, lang, amount_cents
+    birth_date, birth_place, company, notes, lang,
+    amount_cents, vat_percent, vat_cents
   ) values (
     p_session_id, p_first_name, p_last_name, p_email, p_phone,
     p_birth_date, p_birth_place, p_company, p_notes,
-    case when p_lang = 'ar' then 'ar' else 'nl' end, v_session.price_cents
+    case when p_lang = 'ar' then 'ar' else 'nl' end,
+    v_session.price_cents + v_vat, v_session.vat_percent, v_vat
   )
   returning * into v_booking;
 

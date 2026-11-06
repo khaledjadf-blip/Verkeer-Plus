@@ -40,13 +40,24 @@ function compose(lang: Booking['lang'], nl: string, ar: string) {
   return wrap(lang === 'ar' ? `${rtl(ar)}${divider}${nl}` : nl)
 }
 
+/** Amount rows: total excl. btw and total paid; old bookings without btw only the total. */
+function amountRows(b: Booking, lang: 'nl' | 'ar') {
+  const ar = lang === 'ar'
+  const euro = (cents: number) => (ar ? ltr(escapeHtml(formatEuro(cents))) : escapeHtml(formatEuro(cents)))
+  const total = `<strong>${euro(b.amount_cents)}</strong>`
+  if (!b.vat_cents) return row(ar ? 'المبلغ المدفوع' : 'Betaald', total, ar)
+  return [
+    row(ar ? 'المجموع بدون ضريبة' : 'Totaal excl. btw', euro(b.amount_cents - b.vat_cents), ar),
+    row(ar ? 'المجموع المدفوع' : 'Totaal betaald', total, ar),
+  ].join('')
+}
+
 function customerEmailHtml(b: BookingWithSession) {
   const s = b.vp_course_sessions
   const course = escapeHtml(courseTitleNl)
   const location = escapeHtml(s.location)
   const name = escapeHtml(b.first_name)
   const time = escapeHtml(formatTimeRange(s.starts_at, s.ends_at))
-  const amount = escapeHtml(formatEuro(b.amount_cents))
   const phone = escapeHtml(siteConfig.phone)
   const email = escapeHtml(siteConfig.email)
 
@@ -59,7 +70,7 @@ function customerEmailHtml(b: BookingWithSession) {
     ${row('Datum', escapeHtml(formatDate(s.starts_at, 'nl')))}
     ${row('Tijd', time)}
     ${row('Locatie', location)}
-    ${row('Betaald', amount)}
+    ${amountRows(b, 'nl')}
   </table>
   <p>Neem op de opleidingsdag een geldig identiteitsbewijs mee (paspoort, ID-kaart of rijbewijs). Kom graag 15 minuten voor aanvang.</p>
   <p>Annuleren is kosteloos tot 7 dagen voor de startdatum: stuur dan een e-mail naar ${email}. Daarna is terugbetaling niet mogelijk. Zie onze <a href="${termsUrl.nl}">voorwaarden</a>.</p>
@@ -75,7 +86,7 @@ function customerEmailHtml(b: BookingWithSession) {
       ${row('التاريخ', escapeHtml(formatDate(s.starts_at, 'ar')), true)}
       ${row('الوقت', `${ltr(time)}`, true)}
       ${row('المكان', `${ltr(location)}`, true)}
-      ${row('المبلغ المدفوع', `${ltr(amount)}`, true)}
+      ${amountRows(b, 'ar')}
     </table>
     <p>أحضر معك يوم الدورة إثبات هوية ساري المفعول (جواز سفر أو بطاقة هوية أو رخصة قيادة). يرجى الحضور قبل 15 دقيقة من البداية.</p>
     <p>الإلغاء مجاني حتى 7 أيام قبل موعد بدء الدورة: أرسل إيميل إلى ${ltr(email)}. بعد ذلك لا يمكن إرجاع المبلغ. اقرأ <a href="${termsUrl.ar}">الشروط</a>.</p>
@@ -105,7 +116,12 @@ async function sendConfirmationEmails(b: BookingWithSession) {
         ['Bedrijf', b.company],
         ['Opmerking', b.notes],
         ['Taal website', b.lang === 'ar' ? 'Arabisch' : 'Nederlands'],
-        ['Bedrag', formatEuro(b.amount_cents)],
+        ...(b.vat_cents
+          ? ([
+              ['Totaal excl. btw', formatEuro(b.amount_cents - b.vat_cents)],
+              ['Totaal betaald', formatEuro(b.amount_cents)],
+            ] as [string, string][])
+          : ([['Bedrag', formatEuro(b.amount_cents)]] as [string, string][])),
         ['Betaal-ID', b.payment_id],
         ['Plekken bezet', `${s.seats_taken} / ${s.seats_total}`],
       ]),
