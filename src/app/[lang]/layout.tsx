@@ -68,13 +68,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Verkeersplus',
       title: titles[lang],
       description: descriptions[lang],
-      images: [{ url: '/images/road-bg.webp', width: 1376, height: 768, alt: 'Verkeersplus — verkeersregelaars op de weg' }],
+      // Preview image for WhatsApp, Facebook and LinkedIn (JPG, 1200x630: webp is not shown everywhere).
+      images: [{ url: '/images/og-share.jpg', width: 1200, height: 630, alt: 'Verkeersplus — verkeersregelaars binnen 24 uur geregeld' }],
     },
     twitter: {
       card: 'summary_large_image',
       title: titles[lang],
       description: descriptions[lang],
-      images: ['/images/road-bg.webp'],
+      images: ['/images/og-share.jpg'],
     },
     robots: {
       index: true,

@@ -9,7 +9,7 @@ import { useLang } from '@/lib/langContext'
 import { localizedHref } from '@/lib/localizedHref'
 import { HONEYPOT_NAME } from '@/lib/submitForm'
 
-type Errors = Partial<Record<'firstName' | 'lastName' | 'birthDate' | 'birthPlace' | 'email' | 'phone' | 'acceptTerms', string>>
+type Errors = Partial<Record<'firstName' | 'lastName' | 'birthDate' | 'email' | 'phone' | 'acceptTerms', string>>
 
 export default function BookingForm({ sessionId }: { sessionId: string }) {
   const { lang } = useLang()
@@ -27,7 +27,6 @@ export default function BookingForm({ sessionId }: { sessionId: string }) {
       firstName: text('firstName'),
       lastName: text('lastName'),
       birthDate: text('birthDate'),
-      birthPlace: text('birthPlace'),
       email: text('email'),
       phone: text('phone'),
       company: text('company') || undefined,
@@ -40,7 +39,6 @@ export default function BookingForm({ sessionId }: { sessionId: string }) {
     if (!values.firstName) next.firstName = b.errRequired
     if (!values.lastName) next.lastName = b.errRequired
     if (!/^\d{4}-\d{2}-\d{2}$/.test(values.birthDate)) next.birthDate = b.errRequired
-    if (values.birthPlace.length < 2) next.birthPlace = b.errRequired
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) next.email = b.errEmail
     if (values.phone.replace(/\D/g, '').length < 8) next.phone = b.errPhone
     if (!values.acceptTerms) next.acceptTerms = b.errTerms
@@ -89,25 +87,20 @@ export default function BookingForm({ sessionId }: { sessionId: string }) {
         <Field label={b.lastName} required error={errors.lastName}>
           <Input name="lastName" autoComplete="family-name" maxLength={100} />
         </Field>
-        <Field label={b.birthDate} required error={errors.birthDate}>
-          <Input name="birthDate" type="date" autoComplete="bday" />
-        </Field>
-        <Field label={b.birthPlace} required error={errors.birthPlace}>
-          <Input name="birthPlace" maxLength={100} />
-        </Field>
         <Field label={b.email} required error={errors.email}>
           <Input name="email" type="email" autoComplete="email" dir="ltr" maxLength={200} />
         </Field>
         <Field label={b.phone} required error={errors.phone}>
           <Input name="phone" type="tel" autoComplete="tel" dir="ltr" maxLength={30} />
         </Field>
-      </div>
-
-      <div className="mb-4">
+        <Field label={b.birthDate} required error={errors.birthDate}>
+          <Input name="birthDate" type="date" autoComplete="bday" />
+        </Field>
         <Field label={b.company}>
           <Input name="company" autoComplete="organization" maxLength={150} />
         </Field>
       </div>
+
       <div className="mb-6">
         <Field label={b.notes}>
           <Textarea name="notes" rows={3} maxLength={1000} />

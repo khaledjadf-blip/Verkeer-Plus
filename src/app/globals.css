@@ -33,6 +33,32 @@
     font-family: var(--font-arabic), var(--font-display);
   }
 
+  /* RTL: Arabic letters must join, so labels drop the mono font, letter spacing and tiny sizes. */
+  [dir='rtl'] .font-mono,
+  [dir='rtl'] .eyebrow,
+  [dir='rtl'] .btn-primary,
+  [dir='rtl'] .btn-outline,
+  [dir='rtl'] .hero-over-link {
+    font-family: var(--font-arabic), var(--font-body);
+  }
+  [dir='rtl'] .font-mono[class*='tracking-'],
+  [dir='rtl'] .eyebrow,
+  [dir='rtl'] .btn-primary,
+  [dir='rtl'] .btn-outline,
+  [dir='rtl'] .hero-over-link {
+    letter-spacing: 0;
+  }
+  [dir='rtl'] .eyebrow {
+    font-size: 14px;
+  }
+  [dir='rtl'] .font-mono[class*='text-[10px]'],
+  [dir='rtl'] .font-mono[class*='text-[11px]'],
+  [dir='rtl'] .font-mono[class*='text-[12px]'],
+  [dir='rtl'] .btn-primary,
+  [dir='rtl'] .btn-outline {
+    font-size: 13px;
+  }
+
   /* Selection color */
   ::selection {
     background: #d4191b;

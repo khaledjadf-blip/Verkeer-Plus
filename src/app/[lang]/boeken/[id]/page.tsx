@@ -36,7 +36,7 @@ export default async function BookingPage({ params }: { params: Promise<{ lang: 
           <div className="mx-auto max-w-[1120px] px-6 pt-14 md:px-12">
             <span className="stripe" />
             <p className="eyebrow">{b.bookingEyebrow}</p>
-            <h1 className="font-display text-[clamp(26px,4.5vw,42px)] font-bold leading-[1.12] text-white">{title}</h1>
+            <h1 className="font-display text-[clamp(24px,4.5vw,42px)] font-bold leading-[1.12] text-white">{title}</h1>
             <Link href={localizedHref('/opleiding', lang)} className="mt-4 inline-block font-mono text-[12px] uppercase tracking-[0.08em] text-accent-soft hover:underline">
               {b.otherDate}
             </Link>

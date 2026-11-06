@@ -50,7 +50,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
                     <p>
                       عند تعبئة نموذج التواصل أو نموذج التقديم للعمل، نستلم البيانات التي تدخلها بنفسك: الاسم،
                       رقم الهاتف، البريد الإلكتروني، مدينة الإقامة، وعند التقديم للعمل — السيرة الذاتية إن وُجدت.
-                      عند حجز دورة نحفظ أيضاً تاريخ ومكان ميلادك وحالة الدفع، لأنها ضرورية للتسجيل والشهادة.
+                      عند حجز دورة نحفظ أيضاً تاريخ ميلادك وحالة الدفع، لأنها ضرورية للتسجيل والشهادة.
                       نحن لا نجمع بيانات عبر ملفات تعريف ارتباط تتبعية أو شبكات إعلانية.
                     </p>
                     <p className="mt-3">
@@ -108,8 +108,8 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
                     <p>
                       Wanneer je het contactformulier of het sollicitatieformulier invult, ontvangen wij de gegevens
                       die je zelf invoert: onder andere naam, telefoonnummer, e-mailadres, woonplaats en — bij een
-                      sollicitatie — eventueel een cv. Boek je een opleiding, dan bewaren we ook je geboortedatum,
-                      geboorteplaats en betaalstatus; die zijn nodig voor de inschrijving en het certificaat. Wij
+                      sollicitatie — eventueel een cv. Boek je een opleiding, dan bewaren we ook je geboortedatum
+                      en betaalstatus; die zijn nodig voor de inschrijving en het certificaat. Wij
                       verzamelen geen gegevens via trackingcookies of advertentienetwerken.
                     </p>
                     <p className="mt-3">
