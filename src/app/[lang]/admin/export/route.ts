@@ -36,7 +36,7 @@ export async function GET(request: Request) {
   const labels = adminText.nl.bookingStatus
   const header = [
     'Opleiding', 'Startdatum', 'Locatie', 'Voornaam', 'Achternaam', 'E-mail', 'Telefoon',
-    'Geboortedatum', 'Geboorteplaats', 'Bedrijf', 'Excl. btw (EUR)', 'Btw (EUR)', 'Totaal incl. btw (EUR)', 'Status', 'Betaald op', 'Geboekt op', 'Opmerking',
+    'Geboortedatum', 'Bedrijf', 'Excl. btw (EUR)', 'Btw (EUR)', 'Totaal incl. btw (EUR)', 'Status', 'Betaald op', 'Geboekt op', 'Opmerking',
   ]
   const rows = ((data ?? []) as BookingWithSession[]).map((b) => {
     const s = b.vp_course_sessions
@@ -49,7 +49,6 @@ export async function GET(request: Request) {
       b.email,
       b.phone,
       b.birth_date ?? '',
-      b.birth_place ?? '',
       b.company ?? '',
       euro(b.amount_cents - b.vat_cents),
       euro(b.vat_cents),
