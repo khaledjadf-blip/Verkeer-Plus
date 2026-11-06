@@ -81,15 +81,11 @@ export function SessionSummary({ session, lang, title }: { session: PublicSessio
       <Meta session={session} lang={lang} />
       <dl className="grid gap-2 border-t border-concrete pt-4 text-[14px]">
         <div className="flex items-baseline justify-between">
-          <dt className="text-dim">{b.priceExcl}</dt>
-          <dd><bdi dir="ltr" className="text-white">{formatEuro(price.excl)}</bdi></dd>
-        </div>
-        <div className="flex items-baseline justify-between">
-          <dt className="text-dim">{b.vatLine(price.vatPercent)}</dt>
-          <dd><bdi dir="ltr" className="text-white">{formatEuro(price.vat)}</bdi></dd>
+          <dt className="text-dim">{b.totalExcl}</dt>
+          <dd><bdi dir="ltr" className="font-semibold text-muted">{formatEuro(price.excl)}</bdi></dd>
         </div>
         <div className="flex items-baseline justify-between border-t border-concrete pt-3">
-          <dt className="font-semibold text-white">{b.totalToPay}</dt>
+          <dt className="font-semibold text-white">{b.total}</dt>
           <dd><bdi dir="ltr" className="font-display text-[26px] font-bold text-white">{formatEuro(price.total)}</bdi></dd>
         </div>
       </dl>
