@@ -41,15 +41,10 @@ export function SessionList({ sessions, lang }: { sessions: PublicSession[]; lan
           <li key={s.id} className="grid gap-4 border border-concrete bg-card p-5 sm:grid-cols-[1fr_auto] sm:items-center sm:p-6">
             <Meta session={s} lang={lang} />
             <div className="flex flex-wrap items-center gap-3 sm:flex-col sm:items-end">
-              <div className="text-start sm:text-end">
-                <p className="flex items-baseline gap-1.5 sm:justify-end">
-                  <bdi dir="ltr" className="font-display text-[26px] font-bold text-white">{formatEuro(s.priceCents)}</bdi>
-                  <span className="text-[12px] text-dim">{b.exclVat}</span>
-                </p>
-                <p className="text-[12px] text-dim">
-                  <bdi dir="ltr">{formatEuro(priceBreakdown(s.priceCents, s.vatPercent).total)}</bdi> {b.inclVat}
-                </p>
-              </div>
+              <p className="flex items-baseline gap-1.5">
+                <bdi dir="ltr" className="font-display text-[26px] font-bold text-white">{formatEuro(s.priceCents)}</bdi>
+                <span className="text-[12px] text-dim">{b.exclVat}</span>
+              </p>
               {full ? (
                 <span className="border border-concrete px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-dim">{b.full}</span>
               ) : (

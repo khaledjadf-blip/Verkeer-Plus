@@ -13,7 +13,6 @@ export const bookingText = {
     bookBtn: 'Boek deze datum',
     language: 'Lestaal',
     exclVat: 'excl. btw',
-    inclVat: 'incl. btw',
     totalExcl: 'Totaal excl. btw',
     total: 'Totaal',
     // Booking page
@@ -79,7 +78,6 @@ export const bookingText = {
     bookBtn: 'احجز هذا الموعد',
     language: 'لغة الدورة',
     exclVat: 'بدون ضريبة',
-    inclVat: 'مع الضريبة',
     totalExcl: 'المجموع بدون ضريبة',
     total: 'المجموع',
     bookingEyebrow: 'الحجز',
